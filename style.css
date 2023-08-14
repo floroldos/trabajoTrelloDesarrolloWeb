@@ -10,3 +10,10 @@
 .agregarTarjeta {
     align-items: right;
 }
+
+body{
+    /*background-color: rgb(30, 30, 95);*/
+    background-color: rgb(123, 123, 176);
+    font-family: Comic Sans MS, Comic Sans, cursive;
+}
+
