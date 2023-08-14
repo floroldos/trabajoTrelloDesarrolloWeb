@@ -7,11 +7,27 @@
     <title> Trello </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel = "stylesheet" href = "style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css%22%3E">
 </head>
 <body>
-    <h1> TRELLO UWU </h1>
-    <button> </button>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-    <script name = "script.js"></script>
+    <div class = "espacio">
+    <h1> <img class = "logoTrello" src = "trello-seeklogo.com.svg"> TRELLO UWU </h1>
+    <hr>
+    <p class = "agregarTarjeta"> Agregar tarjeta
+    <button id="button_A">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z"/>
+        </svg>
+   </button>
+    </p>
+    </div>
+    <div class = "contenedor">
+        <div class = "row" id = "panel">
+
+        </div>
+        <div class = "row2" id = "nombreTarea"></div>
+    </div>
+    <!--- INICIALIZAR JAVASCRIPT -->
+    <script src = "script.js"></script>
 </body>
 </html>

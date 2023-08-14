@@ -1,0 +1,12 @@
+.espacio {
+    padding: 20px;
+}
+
+.logoTrello {
+    width: 50px;
+    height: 50px;
+}
+
+.agregarTarjeta {
+    align-items: right;
+}
