@@ -12,7 +12,7 @@ hacerAlerta : buttonA.onclick = () => {
 function crearTarjeta (nombreTarjeta, descripcionTarjeta){
   let tarjeta = `
   <div class="card" style="width: 18rem;">
-  <img class="card-img-top" src="flying-bug-seeklogo.com-2.svg">
+  <img class="card-img-top" src="img/flying-bug-seeklogo.com-2.svg">
   <div class="card-body">
     <h4 class="card-title"> ${nombreTarjeta} </h4>
     <hr>
