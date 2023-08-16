@@ -1,11 +1,12 @@
+
 .espacio {
     padding: 20px;
 }
 
 .logoTrello {
-    width: 50px;
-    height: 50px;
-}
+    width: 30px;
+    height: 30px;
+} 
 
 .agregarTarjeta {
     align-items: center;
@@ -26,6 +27,9 @@ body{
 }
 .contenedor{
     padding: 1%;
-    width: 22%;
+    width: 80%;
     background-color: rgba(9, 7, 50, 0.393);
+}
+.prueba{
+    justify-content: flex-start;
 }
