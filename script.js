@@ -10,27 +10,39 @@ hacerColumna : botonColumna.onclick = () => {
 function crearColumna (nombreColumna){
   let columna = `
     <div class="col-4 contenedor" id="card">
-    <h3>
-      ${nombreColumna} 
-      <button  onclick = "alertaBorrarC(this)" type="button" id="delete" margin-left=5px class="transparent">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-      </svg>
-      </button>
-      <button  onclick = "crearTarjeta(this)" type="button" id="button_A" margin-left=5px class="transparent">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-      </svg>
-      </button>
-      </h3>
+      <div class = "titulo"
+        <h3>
+          ${nombreColumna} 
+          <button  onclick = "alertaBorrarC(this)" type="button" id="delete" margin-left=5px class="botonColumn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+              <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+            </svg>
+        </button>
+        <button  onclick = "crearTarjeta(this)" type="button" id="button_A" margin-left=5px class="botonColumn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+          </svg>
+        </button>
+        <button onclick = "contraerDescontraer(this)" type="button" margin-left=5px class="icono_svg botonColumn boton">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
+          </svg>
+        </button>
+        </h3>
+      </div>
+      <div class="linea">
+        <hr/>
+      </div>
+      <div class = "contenido" style="display: block;">
+      </div>
     </div>
-`;
-const nuevaColumna = document.createElement("div"); // Crear un nuevo elemento div para la tarjeta
-nuevaColumna.className = "col-4 prueba";
-nuevaColumna.innerHTML = columna; // Asignar el contenido HTML de la tarjeta al nuevo div
+  `;
+  const nuevaColumna = document.createElement("div"); // Crear un nuevo elemento div para la tarjeta
+  nuevaColumna.className = "col-4 columna";
+  nuevaColumna.innerHTML = columna; // Asignar el contenido HTML de la tarjeta al nuevo div
 
-const contenedor = document.getElementById("panel");
-contenedor.appendChild(nuevaColumna); // Agregar la nueva tarjeta al panel
+  const contenedor = document.getElementById("panel");
+  contenedor.appendChild(nuevaColumna); // Agregar la nueva tarjeta al panel
 }
 
 function borrarTarjeta(botonB) {
@@ -77,12 +89,16 @@ function crearTarjeta (boton){
   
   let tarjeta = `
     <div class="card">
-      <img class="card-img-top" src="img/flying-bug-seeklogo.com-2.svg">
+      <img class="card-img-top" src="img/Imagen1.svg">
       <div class="card-body">
         <h4 class="card-title"> ${name} </h4>
         <hr>
         <p class="card-text">${description}</p>
-        <button onclick ="alertaBorrarT(this)" type="button" aria-label="Trash" margin-left=5px><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16"><path d="M11 1.75V3h2.25a.75.75 0 0 1 0 1.5H2.75a.75.75 0 0 1 0-1.5H5V1.75C5 .784 5.784 0 6.75 0h2.5C10.216 0 11 .784 11 1.75ZM4.496 6.675l.66 6.6a.25.25 0 0 0 .249.225h5.19a.25.25 0 0 0 .249-.225l.66-6.6a.75.75 0 0 1 1.492.149l-.66 6.6A1.748 1.748 0 0 1 10.595 15h-5.19a1.75 1.75 0 0 1-1.741-1.575l-.66-6.6a.75.75 0 1 1 1.492-.15ZM6.5 1.75V3h3V1.75a.25.25 0 0 0-.25-.25h-2.5a.25.25 0 0 0-.25.25Z"></path></svg></button>
+        <button onclick ="alertaBorrarT(this)" type="button" aria-label="Trash" margin-left=5px class="botonCard">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+          </svg>     
+        </button>
       </div>
     </div>
 `;
@@ -90,16 +106,45 @@ function crearTarjeta (boton){
   const nuevaTarjeta = document.createElement("div"); // Crear un nuevo elemento div para la tarjeta
   nuevaTarjeta.innerHTML = tarjeta; // Asignar el contenido HTML de la tarjeta al nuevo div
 
-  const panel = document.getElementById("card");
-  boton.parentNode.parentNode.appendChild(nuevaTarjeta); // Agregar la nueva tarjeta al panel
+  const contenedor = boton.closest('.contenedor');
+  const contenido = contenedor.querySelector('.contenido');
+
+  contenido.appendChild(nuevaTarjeta);
 
   alert(`Tarjeta ${name} creada satisfactoriamente.`);
 
 }
 
+function contraerDescontraer(boton){
+  const contenedor = boton.closest('.contenedor');
+  const columna = contenedor.querySelector('.contenido');
+
+  let boton1 = `
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle-fill" viewBox="0 0 16 16">
+    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
+  </svg>
+  `;
+
+  let boton2 = `
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16">
+    <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
+  </svg>
+  `;
+
+  boton.addEventListener('click', () => {
+    if (columna.style.display === 'none') {
+      columna.style.display = 'block';
+      boton.innerHTML = boton2
+    } else {
+      columna.style.display = 'none';
+      boton.innerHTML = boton1
+    }
+  }); 
+}
+
+
+
 // main
-
 crearColumna("To-Do");
-crearColumna("En proceso");
-crearColumna("Realizadas");
-
+crearColumna("In progress");
+crearColumna("Done");

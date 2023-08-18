@@ -4,37 +4,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Tello </title>
+    <title> Trello </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link rel = "stylesheet" href = "style.css">
-    <link rel="shortcut icon" href="img/icon_3465303b409d37f14e89144c105c5b3e.ico">
+    <link rel="shortcut icon" href="img/trello-seeklogo.com.svg">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css%22%3E">
 </head>
 <body>
-    <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="#">
-            <img class="logoTrello" src = "img/trello.svg" class="d-inline-block align-top" alt="">
-                <strong> Tello </strong>
-        </a>
-    <hr>
-    </nav>
-    </div>
     <div>
-        <div class = "espacio">
-            <p> Crear columna
-                <button id="botonColumna" class="transparent">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-                    </svg>
-                </button>
-            </p>
-        </div>
+        <nav class="navbar">
+            <div class="container-fluid">
+                <p class="titulo">
+                    <img src="/img/trello-seeklogo.com.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+                    Trello
+                </p>
+                <button type="button" class="btn btn-outline-dark" id="botonColumna">Crear Columna</button>
+            </div>
+        </nav>
     </div>
     <div class = "container">
         <div class="row" id = "panel">
         </div>
     </div>
-</div>
     <!--- INICIALIZAR JAVASCRIPT -->
     <script src = "script.js"></script>
 </body>
