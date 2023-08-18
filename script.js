@@ -2,23 +2,28 @@ const buttonA = document.querySelector("#button_A");
 const botonColumna = document.querySelector("#botonColumna");
 
 hacerColumna : botonColumna.onclick = () => {
-  const nombre = prompt("Ingrese el nombre de la columna");
-  alert(`Columna ${nombre} creada satisfactoriamente.`);
-  crearColumna(nombre);
+  const nombre = prompt("Ingrese el nombre de la columna")
+  if(nombre !== null && nombre.trim() !== ""){
+    alert(`Columna ${nombre} creada satisfactoriamente.`);
+    crearColumna(nombre);
+  }
 }
 
 function crearColumna (nombreColumna){
   let columna = `
     <div class="col-4 contenedor" id="card">
-      <div class = "titulo"
-        <h3>
-          ${nombreColumna} 
-          <button  onclick = "alertaBorrarC(this)" type="button" id="delete" margin-left=5px class="botonColumn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-              <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
-            </svg>
+      <div class="titulo">
+        <p>
+          ${nombreColumna}
+        </p>
+      </div>
+      <div class="botones">
+        <button  onclick = "alertaBorrarC(this)" type="button" id="delete" margin-left=5px class="botonColumn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+            <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+          </svg>
         </button>
-        <button  onclick = "crearTarjeta(this)" type="button" id="button_A" margin-left=5px class="botonColumn">
+        <button  onclick = "botonCrearTarjeta(this)" type="button" id="button_A" margin-left=5px class="botonColumn">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
           </svg>
@@ -28,7 +33,6 @@ function crearColumna (nombreColumna){
             <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
           </svg>
         </button>
-        </h3>
       </div>
       <div class="linea">
         <hr/>
@@ -73,20 +77,20 @@ function alertaBorrarT(boton){
   }
 }
 
-/*
-function agregarT.onclick = () => {
-  const name = prompt("Ingrese el nombre de la tarjeta");
-  const description = prompt("Ingrese la descripción de la tarjeta");
 
-  alert(`Tarjeta ${name} creada satisfactoriamente.`);
-  crearTarjeta(name, description);
+function botonCrearTarjeta(boton){
+  const name = prompt("Ingrese el nombre de la tarjeta");
+  if(name !== null && name.trim() !== ""){
+    const description = prompt("Ingrese la descripción de la tarjeta");
+    if(description !== null && description.trim() !== ""){
+      alert(`Tarjeta ${name} creada satisfactoriamente.`)
+      crearTarjeta(boton, name, description)
+    }
+  }
 }
-*/
 
-function crearTarjeta (boton){
-  const name = prompt("Ingrese el nombre de la tarjeta");
-  const description = prompt("Ingrese la descripción de la tarjeta");
-  
+
+function crearTarjeta (boton, name, description){
   let tarjeta = `
     <div class="card">
       <img class="card-img-top" src="img/Imagen1.svg">
@@ -110,9 +114,6 @@ function crearTarjeta (boton){
   const contenido = contenedor.querySelector('.contenido');
 
   contenido.appendChild(nuevaTarjeta);
-
-  alert(`Tarjeta ${name} creada satisfactoriamente.`);
-
 }
 
 function contraerDescontraer(boton){
@@ -131,7 +132,7 @@ function contraerDescontraer(boton){
   </svg>
   `;
 
-  boton.addEventListener('click', () => {
+  boton.onclick = () => {
     if (columna.style.display === 'none') {
       columna.style.display = 'block';
       boton.innerHTML = boton2
@@ -139,10 +140,27 @@ function contraerDescontraer(boton){
       columna.style.display = 'none';
       boton.innerHTML = boton1
     }
-  }); 
+  }; 
 }
 
+function cambiaFondo(){
+  const button = document.getElementById('cambiarEstilo');
+    let estiloActual = 0;
 
+    button.addEventListener('click', () => {
+      estiloActual = (estiloActual + 1) % 2;
+
+      if (estiloActual === 1) {
+        document.body.style.backgroundColor = '#f0f0f0';
+        document.body.style.color = '#333';
+        button.style.backgroundColor = '#ff6600';
+      } else {
+        document.body.style.backgroundColor = '#fff';
+        document.body.style.color = '#000';
+        button.style.backgroundColor = '#007bff';
+      }
+    });
+}
 
 // main
 crearColumna("To-Do");
