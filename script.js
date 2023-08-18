@@ -12,7 +12,7 @@ hacerColumna : botonColumna.onclick = () => {
 function crearColumna (nombreColumna){
   let columna = `
     <div class="col-4 contenedor" id="card">
-      <div class="titulo">
+      <div class="tituloColumnas">
         <p>
           ${nombreColumna}
         </p>
