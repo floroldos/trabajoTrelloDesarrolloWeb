@@ -11,7 +11,7 @@ hacerColumna : botonColumna.onclick = () => {
 
 function crearColumna (nombreColumna){
   let columna = `
-    <div class="col-4 contenedor" id="card">
+    <div class="col-4 contenedor" id="columna" ondrop="drop(event)" ondragover="allowDrop(event)">
       <div class="tituloColumnas">
         <p>
           ${nombreColumna}
@@ -38,7 +38,7 @@ function crearColumna (nombreColumna){
       <div class="linea">
         <hr/>
       </div>
-      <div class = "contenido" style="display: block;">
+      <div class = "contenido" style="display: block;" ondrop="drop(event)" ondragover="allowDrop(event)">
       </div>
     </div>
   `;
@@ -97,13 +97,12 @@ function botonCrearTarjeta(boton){
 
 function crearTarjeta (boton, name, description){
   let tarjeta = `
-    <div class="card">
+    <div class="card" draggable="true" ondragstart="drag(event)">
       <img class="card-img-top" src="img/Imagen1.svg">
       <div class="card-body">
         <h4 class="card-title"> ${name} </h4>
         <hr width="100%">
         <p class="card-text">${description}</p>
-        <hr width="100%">
       </div>
       <div class="botones">
         <button onclick ="alertaBorrarT(this)" type="button" aria-label="Trash" margin-left=5px class="botonCard">
@@ -129,15 +128,15 @@ function contraerDescontraer(boton){
   const columna = contenedor.querySelector('.contenido');
 
   let botonDown = `
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
-  </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-circle" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z"/>
+    </svg>
   `;
 
   let botonUp = `
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
-  </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-circle" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z"/>
+    </svg>
   `;
 
   boton.onclick = () => {
@@ -169,6 +168,20 @@ function cambiaFondo(){
       }
     });
 }
+
+//DRAG AND DROP
+
+function dragover_handler(ev) {
+  ev.preventDefault();
+  ev.dataTransfer.dropEffect = "move";
+}
+function drop_handler(ev) {
+  ev.preventDefault();
+  // Get the id of the target and add the moved element to the target's DOM
+  const data = ev.dataTransfer.getData("text/plain");
+  ev.target.appendChild(document.getElementById(data));
+}
+
 
 // main
 crearColumna("To-Do");
