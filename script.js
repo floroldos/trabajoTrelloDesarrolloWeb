@@ -1,8 +1,4 @@
 /// Global
-
-const buttonA = document.querySelector("#button_A");
-const botonColumna = document.querySelector("#botonColumna");
-
 var tarjId = 0;
 
 class tarea {
