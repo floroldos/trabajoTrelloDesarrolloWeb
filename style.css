@@ -1,3 +1,12 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
 body{
     background-image: url(/img/fondoMontañaAguaVerde.jpg);
     background-size: cover;
@@ -34,11 +43,11 @@ body{
     background-color: rgba(5, 4, 23, 0.56);
     margin: 10px;
     border-radius: 5%;
-
 }
 
 .card{
     margin: 10px;
+    cursor: move;
 }
 
 .botonColumnStyle{
@@ -51,7 +60,6 @@ body{
 .botonCard{
     background: none;
     border: none;
-    padding: 0;
     margin: 10px 10px 10px 10px;
 }
 
