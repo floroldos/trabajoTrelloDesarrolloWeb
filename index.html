@@ -12,13 +12,12 @@
 </head>
 <body>
     <div>
-        <nav class="navbar">
+        <nav class="navbar scroll">
             <div class="container-fluid">
                 <p class="titulo">
                     <img src="/img/trello-seeklogo.com.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
                     Trello
                 </p>
-            <button type="button" class="btn btn-outline-light rounded-pill" id="botonColumna">Crear Columna</button>
             </div>
             <!--
             <form id="todo-form">
@@ -30,8 +29,12 @@
     </div>
 
     <div class = "container">
-        <div class = "row flex-row flex-nowrap" id = "panel">
-            
+        <div class = "row flex-row overflow-auto flex-nowrap" id="panel">
+            <div class="col-3 column" id="button">
+                <div class="row justify-content-center col-3 botones" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <button type="button" class="btn btn-outline-light rounded-pill" onclick="botonCrearColumna()">Crear Columna</button>
+                </div>
+            </div>          
         </div>
     </div>
     <!--- INICIALIZAR JAVASCRIPT -->
