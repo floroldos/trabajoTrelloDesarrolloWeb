@@ -1,5 +1,4 @@
-
-/// Funciones Principales ///
+/* <=================================== Principal Functions ===================================> */
 
 // Crar Columna //
 function crearColumna (nombreColumna){
@@ -80,7 +79,7 @@ function borrarTarjeta(botonB) {
 }
 
 
-/// Otras Funciones ///
+/* <=================================== Other Functions ===================================> */
 
 // Comprimir y Descomprimir //
 function contraerDescontraer(boton){
@@ -108,8 +107,23 @@ function contraerDescontraer(boton){
   }
 }
 
+// Drag and Drop //
+function allowDrop(ev) {
+  ev.preventDefault();
+}
 
-/// Botones ///
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  ev.target.appendChild(document.getElementById(data));
+}
+
+
+/* <=================================== Buttons ===================================> */
 
 // Crar Columna //
 function botonCrearColumna(){
@@ -160,7 +174,7 @@ function botonContraerDecontraer(boton){
 }
 
 
-/// Main ///
+/* <=================================== Mains ===================================> */
 
 crearColumna("To-Do");
 crearColumna("In progress");
