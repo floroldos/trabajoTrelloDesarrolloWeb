@@ -90,3 +90,8 @@ body{
     width: 100%;
     height: 90vh;
 }
+
+select {
+    appearance: none;
+}
+

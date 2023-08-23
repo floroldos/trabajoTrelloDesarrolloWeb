@@ -2,9 +2,17 @@
 var tarjId = 0;
 
 class tarea {
-  constructor(nombre, descripcion) {
+  constructor(nombre, descripcion, listaBullets) {
     this.nombre = nombre;
     this.descripcion = descripcion;
+    this.listaBullets;
+  }
+}
+
+class bullet {
+  constructor(nombre, fecha){
+    this.nombre = nombre;
+    this.fecha = fecha;
   }
 }
 
@@ -13,7 +21,7 @@ class tarea {
 // Crear Columna //
 function crearColumna (nombreColumna){
   let columna = `
-    <div class="row justify-content-center col-3 contenedor" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <div class="row justify-content-center col-3 contenedor">
       <div class="tituloColumnas">
         <p>
           ${nombreColumna}
@@ -37,7 +45,7 @@ function crearColumna (nombreColumna){
           </svg>
         </button>
       </div>
-      <div class = "contenido" style="display: block;"  ondrop="drop(event)" ondragover="allowDrop(event)">
+      <div class = "contenido" style="display: block;" ondrop="drop(event)" ondragover="allowDrop(event)">
       </div>
     </div>
   `;
@@ -51,20 +59,24 @@ function crearColumna (nombreColumna){
 }
 
 // Crear Tarjeta //
-function crearTarjeta (boton, name, description){
+function crearTarjeta (boton, name){
   let tarjeta = `
-    <div class="card" draggable="true">
+    <div class="card" draggable="true" ondragstart="drag(event)" id = "tarjeta">
       <div class="card-body">
         <h4 class="card-title" id = ${tarjId}> ${name} </h4>
-        <hr width="100%">
-        <p class="card-text"> ${description} </p>
-      </div>
-      <div class="botones">
-        <button onclick ="alertaBorrarT(this)" type="button" id="borrarTarea" aria-label="Trash" margin-left=5px class="botonCard">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
-          </svg>    
-        </button>
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownTarjeta" data-bs-toggle="dropdown" aria-expanded="false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+              <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+            </svg>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownTarjeta">
+              <li><a class="dropdown-item" href="#" onclick ="alertaBorrarT(this)">Eliminar tarjeta</a></li>
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar tarjeta
+              </a></li>
+              <li><a class="dropdown-item" href="#"> Algo más </a></li>
+            </ul>
+        </div>
       </div>
     </div>
 `;
@@ -77,11 +89,10 @@ function crearTarjeta (boton, name, description){
 
   contenido.appendChild(nuevaTarjeta);
 
-  let tarea1 = new tarea(name, description);
-
-  let jstring = JSON.stringify(tarea1);
+  const newTask = new tarea(name, description);
+  const jstring = JSON.stringify(newTask);
   localStorage.setItem(tarjId, jstring);
-  tarjId ++;
+  tarjId++;
 }
 
 // Para cargar los datos del localstorage //
@@ -89,38 +100,35 @@ function crearTarjeta (boton, name, description){
 function cargarJson(){
   const contenedor = document.getElementById("panel");
 
-  console.log(localStorage.length);
-
   for (let i = 0; i <= localStorage.length; i++){
     tarjId = i;
     let obj = JSON.parse(localStorage.getItem(i));
-
-    console.log(obj.nombre);
-
     let tarjeta = `
-    <div class="card" draggable="true" id = "tarea">
+    <div class="card" draggable="true" ondragstart="drag(event)" id = "tarea">
       <div class="card-body">
         <h4 class="card-title"> ${obj.nombre} </h4>
-        <hr width="100%">
-        <p class="card-text"> ${obj.descripcion} </p>
-      </div>
-      <div class="botones">
-        <button onclick ="alertaBorrarT(this)" type="button"  id="borrarTarea" aria-label="Trash" margin-left=5px class="botonCard">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
-          </svg>    
-        </button>
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownTarjeta" data-bs-toggle="dropdown" aria-expanded="false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+              <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+            </svg>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownTarjeta">
+              <li><a class="dropdown-item" href="#" onclick ="alertaBorrarT(this)">Eliminar tarjeta</a></li>
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Editar tarjeta
+              </a></li>
+              <li><a class="dropdown-item" href="#"> Algo más </a></li>
+            </ul>
+        </div>
       </div>
     </div>
   `;
 
   const nuevaTarjeta = document.createElement("div"); // Crear un nuevo elemento div para la tarjeta
   nuevaTarjeta.innerHTML = tarjeta; // Asignar el contenido HTML de la tarjeta al nuevo div
-
   const contenido = contenedor.querySelector('.contenido');
 
   contenido.appendChild(nuevaTarjeta);
-
   }
 }
 
@@ -182,9 +190,13 @@ function drag(ev) {
 
 function drop(ev) {
   ev.preventDefault();
-  var data = ev.dataTransfer.getData("text");
-  ev.target.appendChild(document.getElementById(data));
+  var cardId = ev.dataTransfer.getData("text");
+  var card = document.getElementById(cardId);
+  if (card.id === "contenido" && card.id !== "tarjeta"){
+    ev.target.querySelector('.contenido').appendChild(card);
+  }
 }
+
 
 
 /* <=================================== Buttons ===================================> */
@@ -202,11 +214,8 @@ function botonCrearColumna(){
 function botonCrearTarjeta(boton){
   const name = prompt("Ingrese el nombre de la tarjeta");
   if(name !== null && name.trim() !== ""){
-    const description = prompt("Ingrese la descripción de la tarjeta");
-    if(description !== null && description.trim() !== ""){
-      alert(`Tarjeta ${name} creada satisfactoriamente.`)
-      crearTarjeta(boton, name, description)
-    }
+      alert(`Tarjeta ${name} creada satisfactoriamente.`);
+      crearTarjeta(boton, name);
   }
 }
 
@@ -227,7 +236,7 @@ function alertaBorrarC(boton){
 function alertaBorrarT(boton){
   let texto;
   if(confirm("¿Estas seguro que quieres eliminar el elemento?")){
-    borrarTarjeta(boton);
+    borrarTarjeta(boton.parentNode.parentNode.parentNode);
   } else {
     texto = "No se eliminó ningun elemento.";
     alert(texto);
@@ -255,29 +264,10 @@ function drop(ev) {
   ev.target.appendChild(document.getElementById(data));
 }
 
-// Cambiar fondo //
-
-function cambiaFondo(){
-  const button = document.getElementById('cambiarEstilo');
-    let estiloActual = 0;
-
-    button.addEventListener('click', () => {
-      estiloActual = (estiloActual + 1) % 2;
-
-      if (estiloActual === 1) {
-        document.body.style.backgroundColor = '#f0f0f0';
-        document.body.style.color = '#333';
-        button.style.backgroundColor = '#ff6600';
-      } else {
-        document.body.style.backgroundColor = '#fff';
-        document.body.style.color = '#000';
-        button.style.backgroundColor = '#007bff';
-      }
-    });
-}
-
 /* <=================================== Mains ===================================> */
 
-crearColumna("To-Do");
-crearColumna("In progress");
-crearColumna("Done");
+crearColumna("Pendientes");
+crearColumna("En proceso");
+crearColumna("Terminadas");
+
+cargarJson();
