@@ -25,6 +25,9 @@ body{
 }
 
 .tituloColumnas{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
     color:white;
     font-size: 120%;
     margin: 10px 10px 10px 10px;
@@ -53,6 +56,9 @@ body{
 }
 
 .botonColumnStyle{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
     background: none;
     border: none;
     color: white;
@@ -76,6 +82,7 @@ body{
 }
 
 .scroll{
+    z-index: 100;
     position: fixed;
     top: 0;
 }
@@ -95,3 +102,18 @@ select {
     appearance: none;
 }
 
+
+.formulario{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 90%;
+    background-color: rgba(5, 4, 23, 0.56);
+    border-radius: 5%;
+}
+
+.entry{
+    width: 72%;
+    border-radius: 25px;
+    margin: 10px 10px 10px 10px;
+}
