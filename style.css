@@ -17,6 +17,11 @@ body{
     font-family: Comic Sans MS, Comic Sans, cursive;
 }
 
+.contenido{
+    height: auto;
+    background-color: red;
+
+}
 
 .titulo{
     color:white;
@@ -57,7 +62,6 @@ body{
 .botonColumnStyle{
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
     background: none;
     border: none;
     color: white;
@@ -105,7 +109,6 @@ select {
 .formulario{
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
     width: 90%;
     background-color: rgba(5, 4, 23, 0.56);
     border-radius: 5%;

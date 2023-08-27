@@ -43,17 +43,15 @@
         </nav>
     </div>
 
-    <div class = "container">
+    <div class = "container" id = "contenedor-principal">
         <div class = "row flex-row overflow-auto flex-nowrap" id="panel">
             <div class="col-3 column" id="button">
-                <form class="formulario">
-                    <input type="nameColumn" class="form-control entry" id="inputName" aria-describedby="nameCard" placeholder="Nombre de la Columna">
-                    <button type="submit" class="botonColumnStyle">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
-                        </svg>
-                    </button>
-                </form>
+                    <div class="input-group w-auto">
+                        <input type="text" id="inputName" class="form-control" placeholder="Nombre de la columna" aria-label="Example input" ria-describedby="nameCard"/>
+                        <button class="btn btn-primary" type="button" id="button-addon1" data-mdb-ripple-color="dark">
+                            +
+                        </button>
+                </div>
             </div>          
         </div>
     </div>
