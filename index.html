@@ -47,7 +47,7 @@
         <div class = "row flex-row overflow-auto flex-nowrap" id="panel">
             <div class="col-3 column" id="button">
                 <form class="formulario">
-                    <input type="nameColumn" class="form-control entry" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nombre de la Columna">
+                    <input type="nameColumn" class="form-control entry" id="inputName" aria-describedby="nameCard" placeholder="Nombre de la Columna">
                     <button type="submit" class="botonColumnStyle">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
                             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
@@ -58,20 +58,23 @@
         </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <!-- Modal de la tarjeta -->
+    <div class="modal fade" id="editarTarjeta" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editarTarjetaLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Editar tarjeta</h5>
+                    <h5 class="modal-title" id="editarTarjetaLabel">Editar tarjeta</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                            <label class="form-check-label" for="defaultCheck1"> bruh </label>
-                        </div>
+                    <div class="md-form mb-5">
+                        <label data-error="wrong" data-success="right" for="form32">Nombre de la tarjeta</label>
+                        <input type="text" id="form32" class="form-control validate">
+                    </div>
+
+                    <div class="md-form">
+                        <label data-error="wrong" data-success="right" for="form8">Descripción</label>
+                        <textarea type="text" id="form8" class="md-textarea form-control" rows="4"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer">

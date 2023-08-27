@@ -17,24 +17,23 @@ body{
     font-family: Comic Sans MS, Comic Sans, cursive;
 }
 
+
 .titulo{
     color:white;
     font-size: 110%;
-    margin: 10px 10px 10px 10px;
+    margin: 10px;
     text-align: center;
 }
 
 .tituloColumnas{
     display: flex;
-    flex-direction: row;
     justify-content: space-evenly;
     color:white;
     font-size: 120%;
-    margin: 10px 10px 10px 10px;
+    margin: 10px;
     padding: 3%;
     text-align: center;
 }
-
 .linea{
     color: white;
     width: 100%;
@@ -62,13 +61,13 @@ body{
     background: none;
     border: none;
     color: white;
-    margin: 10px 10px 10px 10px;
+    margin: 10px;
 }
 
 .botonCard{
     background: none;
     border: none;
-    margin: 10px 10px 10px 10px;
+    margin: 10px;
 }
 
 .botones{
@@ -115,5 +114,22 @@ select {
 .entry{
     width: 72%;
     border-radius: 25px;
-    margin: 10px 10px 10px 10px;
+    margin: 10px;
+}
+
+#nombreColumna{
+    color: white;
+    background: #0000;
+    border-color: #0000;
+    border-radius: 3px;
+    box-shadow: none;
+    font-weight: 600;
+    max-height: 256px;
+    min-height: 20px;
+    padding: 4px 8px 4px 12px;
+    width: 224px;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    height: 35px;
+    resize: auto;
 }
