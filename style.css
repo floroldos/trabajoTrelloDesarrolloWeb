@@ -18,9 +18,7 @@ body{
 }
 
 .contenido{
-    height: auto;
-    background-color: red;
-
+    height: 100%;
 }
 
 .titulo{
@@ -39,6 +37,7 @@ body{
     padding: 3%;
     text-align: center;
 }
+
 .linea{
     color: white;
     width: 100%;
@@ -136,3 +135,7 @@ select {
     height: 35px;
     resize: auto;
 }
+
+.box.over {
+    border: 3px dotted #666;
+  }

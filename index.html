@@ -48,7 +48,7 @@
             <div class="col-3 column" id="button">
                     <div class="input-group w-auto">
                         <input type="text" id="inputName" class="form-control" placeholder="Nombre de la columna" aria-label="Example input" ria-describedby="nameCard"/>
-                        <button class="btn btn-primary" type="button" id="button-addon1" data-mdb-ripple-color="dark">
+                        <button class="btn btn-primary" type="button" id="botonCrearColumna1" onclick="botonCrearColumna()" data-mdb-ripple-color="dark">
                             +
                         </button>
                 </div>
@@ -79,6 +79,28 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     <button type="button" class="btn btn-primary">Guardar </button>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Modal de alerta eliminar-->
+
+    <div class="modal fade" id="eliminarTarjeta" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="eliminarTarjetaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="eliminarTarjetaLabel">Eliminar tarjeta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="md-form mb-5">
+                        <p>¿Estás seguro que quieres eliminar la tarjeta?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="eliminarTarjetaBoton" onclick="alertaBorrarT('${tarjId}')">Eliminar</button>
+                  </div>
             </div>
         </div>
     </div>

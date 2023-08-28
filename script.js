@@ -27,18 +27,18 @@ function craerBoard (nombreBoard){
   const nuevoBoard = document.createElement("div"); // Crear un nuevo elemento div para el board
   nuevoBoard.innerHTML = board; // Asignar el contenido HTML de la tarjeta al nuevo div
   
-  const boards = document.getElementById("boards")
+  const boards = document.getElementById("boards");
   boards.appendChild(nuevoBoard); // Agregar la nueva columna
 }
 
 // Crear Columna //
 function crearColumna (nombreColumna){
   let columna = `
-    <div class="row justify-content-center col-3 contenedor">
+    <div class="row justify-content-center col-3 contenedor" id = "columna">
       <div class="tituloColumnas">
         <textarea id="nombreColumna" class="list-header-name mod-list-name js-list-name-input" aria-label=${nombreColumna} spellcheck="false" dir="auto" maxlength="512" data-autosize="true">${nombreColumna}</textarea>
           <button onclick = "botonContraerDecontraer(this)" type="button" margin-left=5px class="botonColumnStyle">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
               <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
             </svg>
           </button>
@@ -74,7 +74,7 @@ function crearColumna (nombreColumna){
 // Crear Tarjeta //
 function crearTarjeta (boton, name){
   let tarjeta = `
-    <div class="card" draggable="true" ondragstart="drag(event)" id = "tarjeta">
+    <div class = "card" draggable="true" ondragstart="drag(event)">
       <div class="card-body">
         <h4 class="card-title" id = ${tarjId}> ${name} </h4>
         <div class="dropdown">
@@ -85,7 +85,7 @@ function crearTarjeta (boton, name){
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownTarjeta">
               <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#editarTarjeta">Editar tarjeta</a></li>
-              <li><a class="dropdown-item" href="#" onclick ="alertaBorrarT(this)">Eliminar tarjeta</a></li>
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#eliminarTarjeta">Eliminar tarjeta</a></li>
               <li><a class="dropdown-item" href="#"> Duplicar </a></li>
             </ul>
         </div>
@@ -116,7 +116,7 @@ function cargarJson(){
     tarjId = i;
     let obj = JSON.parse(localStorage.getItem(i));
     let tarjeta = `
-    <div class="card" draggable="true" ondragstart="drag(event)" id = "tarea">
+    <div class = "card" draggable = "true" ondragstart="drag(event)">
       <div class="card-body">
         <h4 class="card-title"> ${obj.nombre} </h4>
         <div class="dropdown">
@@ -127,13 +127,15 @@ function cargarJson(){
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownTarjeta">
               <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#editarTarjeta">Editar tarjeta</a></li>
-              <li><a class="dropdown-item" href="#" onclick ="alertaBorrarT(this)">Eliminar tarjeta</a></li>
+              <li><a class="dropdown-item" href="#" onclick = "alertaBorrarT(this)">Eliminar tarjeta</a></li>
               <li><a class="dropdown-item" href="#"> Duplicar </a></li>
             </ul>
         </div>
       </div>
     </div>
   `;
+
+  /* <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#eliminarTarjeta">Eliminar tarjeta</a></li> */
 
   const nuevaTarjeta = document.createElement("div"); // Crear un nuevo elemento div para la tarjeta
   nuevaTarjeta.innerHTML = tarjeta; // Asignar el contenido HTML de la tarjeta al nuevo div
@@ -150,7 +152,7 @@ function borrarColumna(botonBorrar){
 
 // Borrar Tarjeta //
 function borrarTarjeta(boton) {
-  boton.parentNode.parentNode.remove();
+  boton.parentNode.parentNode.parentNode.remove();
   for(let i = 0; i <= localStorage.length; i++){
     if(localStorage.key(i) == boton.getElementById(id)){
       let clave = localStorage.key(i);
@@ -160,7 +162,6 @@ function borrarTarjeta(boton) {
   console.log(clave);
   localStorage.removeItem(clave);
 }
-
 
 /* <=================================== Other Functions ===================================> */
 
@@ -183,32 +184,12 @@ function contraerDescontraer(boton){
 
   if (columna.style.display === 'none') {
     columna.style.display = 'block';
-    boton.innerHTML = botonUp
+    boton.innerHTML = botonUp;
   } else {
     columna.style.display = 'none';
-    boton.innerHTML = botonDown
+    boton.innerHTML = botonDown;
   }
 }
-
-// Drag and Drop //
-function allowDrop(ev) {
-  ev.preventDefault();
-}
-
-function drag(ev) {
-  ev.dataTransfer.setData("text", ev.target.id);
-}
-
-function drop(ev) {
-  ev.preventDefault();
-  var cardId = ev.dataTransfer.getData("text");
-  var card = document.getElementById(cardId);
-  if (card.id === "contenido" && card.id !== "tarjeta"){
-    ev.target.querySelector('.contenido').appendChild(card);
-  }
-}
-
-
 
 /* <=================================== Buttons ===================================> */
 
@@ -254,18 +235,12 @@ function alertaBorrarC(boton){
 
 // Borrar Tarjeta //
 function alertaBorrarT(boton){
-  let texto;
-  if(confirm("¿Estas seguro que quieres eliminar el elemento?")){
-    borrarTarjeta(boton.parentNode.parentNode.parentNode);
-  } else {
-    texto = "No se eliminó ningun elemento.";
-    alert(texto);
-  }
+  borrarTarjeta(boton.parentNode.parentNode.parentNode);
 }
 
 // Comprimir y Descomprimir //
 function botonContraerDecontraer(boton){
-  contraerDescontraer(boton)
+  contraerDescontraer(boton);
 }
 
 // DRAG AND DROP //
