@@ -74,7 +74,7 @@ function crearColumna (nombreColumna){
 // Crear Tarjeta //
 function crearTarjeta (boton, name){
   let tarjeta = `
-    <div class = "card" draggable="true" ondragstart="drag(event)">
+    <div class = "card" draggable="true">
       <div class="card-body">
         <h4 class="card-title" id = ${tarjId}> ${name} </h4>
         <div class="dropdown">
@@ -116,7 +116,7 @@ function cargarJson(){
     tarjId = i;
     let obj = JSON.parse(localStorage.getItem(i));
     let tarjeta = `
-    <div class = "card" draggable = "true" ondragstart="drag(event)">
+    <div class = "card" draggable = "true">
       <div class="card-body">
         <h4 class="card-title"> ${obj.nombre} </h4>
         <div class="dropdown">
@@ -258,6 +258,8 @@ function drop(ev) {
   var data = ev.dataTransfer.getData("text", ev.target.id);
   ev.target.appendChild(document.getElementById(data));
 }
+
+
 
 /* <=================================== Mains ===================================> */
 
