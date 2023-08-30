@@ -32,7 +32,6 @@ function craerBoard (nombreBoard){
 }
 
 // Crear Columna //
-/ crear columna
 function crearColumna(nombreColumna) {
     let columna = document.createElement("div");
     columna.className = "col-3 columna";
