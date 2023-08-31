@@ -1,43 +1,268 @@
 <!DOCTYPE html>
 <html lang = "es">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Trello </title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <link rel = "stylesheet" href = "style.css">
-    <link rel="shortcut icon" href="img/trello-seeklogo.com.svg">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css%22%3E">
-</head>
-<body onload = "cargarJson()">
-    <div>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Trello </title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+        <link rel = "stylesheet" href = "style.css">
+        <link rel="shortcut icon" href="img/trello-seeklogo.com.svg">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    </head>
+
+    <body>
         <nav class="navbar scroll">
             <div class="container-fluid">
-                <p class="titulo">
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                     <img src="/img/trello-seeklogo.com.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+                </button>
+                <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header">
+                        <img src="/img/trello-seeklogo.com.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Trello</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Board
+                                </a>
+                                <ul class="dropdown-menu" id="boards">
+                                </ul>
+                            </li>
+                            <button type="button" class="btn btn-outline-primary" onclick="botonCrearBoard()">Crear Board</button>
+                        </ul>
+                    </div>
+                </div>
+                <p class="titulo">
                     Trello
                 </p>
             </div>
-            <!--
-            <form id="todo-form">
-                <input type="text" placeholder="Nueva columna." id="todo-input" />
-                <button type="button" class="btn btn-outline-light rounded-pill" id="botonColumna">Crear Columna</button>
-            </form>
-            -->
         </nav>
-    </div>
-
-    <div class = "container">
-        <div class = "row flex-row overflow-auto flex-nowrap" id="panel">
-            <div class="col-3 column" id="button">
-                <div class="row justify-content-center col-3 botones" ondrop="drop(event)" ondragover="allowDrop(event)">
-                    <button type="button" class="btn btn-outline-light rounded-pill" onclick="botonCrearColumna()">Crear Columna</button>
+        <div class = "container" id = "contenedor-principal">
+            <div id="panel" class="row flex-row flex-nowrap">
+                <div class="col-3 column" id="column-01">
+                    <div class="row justify-content-center col-3 contenedor" id = "columna">
+                        <div class="tituloColumnas">
+                            <h4 class="To Do" style="color: white;" contentEditable="true">To Do</h4>
+                            <div class="dropdown">
+                                <button class="btn btn-primary" prtype="button" id="dropdownTarjeta" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                                        <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                                    </svg>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownTarjeta">
+                                    <li>
+                                        <button id="dropdownEditar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editarColumna">
+                                            Editar
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button id = "dropdownComprimirDescomprimir" class="btn btn-primary" type="button" data-bs-toggle="" data-bs-target="" onclick="contraerDescontraer(this)">
+                                            Comprimir
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button id = "dropdownBorrar" class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#eliminarColumna" onclick = "setIdDeleteColumn('column-01')">
+                                            Borrar
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="contenidoCompleto" id="contenidoCompleto">
+                            <div class="input-group w-auto">
+                                <input type="text" id="inputCardName" class="form-control" placeholder="Add Card" aria-label="Example input" ria-describedby="nameCard"/>
+                                <button class="btn btn-primary" type="button" onclick="crearTarjeta(this)">+</button>
+                            </div>
+                            <div class="contenido" id="contenido" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        </div>
+                    </div>
                 </div>
-            </div>          
+                <div class="col-3 column" id="column-02">
+                    <div class="row justify-content-center col-3 contenedor" id="columna">
+                        <div class="tituloColumnas">
+                            <h4 class="To Do" style="color: white;" contentEditable="true">To Do</h4>
+                            <div class="dropdown">
+                                <button class="btn btn-primary" prtype="button" id="dropdownTarjeta" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                                        <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                                    </svg>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownTarjeta">
+                                    <li>
+                                        <button id="dropdownEditar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editarColumna">
+                                            Editar
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button id = "dropdownComprimirDescomprimir" class="btn btn-secondary" onclick="contraerDescontraer(this)">
+                                            Comprimir
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button id = "dropdownBorrar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#eliminarColumna" onclick = "setIdDeleteColumn('column-02')">
+                                            Borrar
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="contenidoCompleto" id="contenidoCompleto">
+                            <div class="input-group w-auto">
+                                <input type="text" id="inputCardName" class="form-control" placeholder="Add Card" aria-label="Example input" ria-describedby="nameCard"/>
+                                <button class="btn btn-primary" type="button" onclick="crearTarjeta(this)">+</button>
+                            </div>
+                            <div class = "contenido" id="contenido" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 column" id="column-03">
+                    <div class="row justify-content-center col-3 contenedor" id = "columna">
+                        <div class="tituloColumnas">
+                            <h4 class="To Do" style="color: white;" contentEditable="true">To Do</h4>
+                            <div class="dropdown">
+                                <button class="btn btn-primary" prtype="button" id="dropdownTarjeta" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                                        <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                                    </svg>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownTarjeta">
+                                    <li>
+                                        <button id="dropdownEditar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editarColumna">
+                                            Editar
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button id = "dropdownComprimirDescomprimir" class="btn btn-secondary" onclick="contraerDescontraer(this)">
+                                            Comprimir
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button id = "dropdownBorrar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#eliminarColumna" onclick = "setIdDeleteColumn('column-03')">
+                                            Borrar
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="contenidoCompleto" id="contenidoCompleto">
+                            <div class="input-group w-auto">
+                                <input type="text" id="inputCardName" class="form-control" placeholder="Add Card" aria-label="Example input" ria-describedby="nameCard"/>
+                                <button class="btn btn-primary" type="button" onclick="crearTarjeta(this)">+</button>
+                            </div>
+                            <div class = "contenido" id="contenido" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-3 column" id="button">
+                    <div class="input-group w-auto">
+                        <input type="text" id="inputColumnName" class="form-control enter-as-button" placeholder="Add Column" aria-label="Example input" ria-describedby="nameCard"/>
+                        <button class="btn btn-primary enter-button" type="button" id="botonCrearColumna1" onclick="crearColumna()" data-mdb-ripple-color="dark">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <!--- INICIALIZAR JAVASCRIPT -->
-    <script src = "script.js"></script>
-</body>
+        <!-- Modal para editar tarjeta -->
+        <div class="modal" id="editarTarjeta">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Editar tarjeta</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Nombre: </span>
+                            <input type="text" class="form-control" id="modalCardTitle" />
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Descripción: </span>
+                            <input type="text" class="form-control" id="modalCardTitle" />
+                        </div>
+                        <div class="md-form">
+                            <span class="input-group-text">Vencimiento: </span>
+                            <input type="date" id="inputFecha" name="trip-start" value="Date().getTime()" min="2023-08-01" max="2030-12-31" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" onclick="guardarTarjetaEditada()">Guardar cambios</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal para editar columna -->
+        <div class="modal" id="editarTarjeta">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Editar tarjeta</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Nombre: </span>
+                            <input type="text" class="form-control" id="modalCardTitle" />
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Descripción: </span>
+                            <input type="text" class="form-control" id="modalCardTitle" />
+                        </div>
+                        <div class="md-form">
+                            <span class="input-group-text">Vencimiento: </span>
+                            <input type="date" id="start" name="trip-start" value="2023-07-22" min="2023-08-01" max="2030-12-31" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" onclick="guardarTarjetaEditada()">Guardar cambios</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal para borrar Tarjeta -->
+        <div class="modal" id="eliminarTarjeta">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Borrar tarjeta</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        ¿Estás seguro de que quieres eliminar esta tarjeta?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="borrarTarjeta()">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <!-- Modal para borrar Columna  -->
+        <div class="modal" id="eliminarColumna">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Borrar columna</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        ¿Estás seguro de que quieres eliminar esta columna?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="borrarColumna()">Eliminar</button>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <!--- INICIALIZAR JAVASCRIPT -->
+        <script defer src="script.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    </body>
 </html>
