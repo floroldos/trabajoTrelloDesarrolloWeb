@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang = "es">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Trello </title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <link rel = "stylesheet" href = "style.css">
-    <link rel="shortcut icon" href="img/trello-seeklogo.com.svg">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
-</head>
-<body>
-    <div>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> Trello </title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+        <link rel = "stylesheet" href = "style.css">
+        <link rel="shortcut icon" href="img/trello-seeklogo.com.svg">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    </head>
+
+    <body>
         <nav class="navbar scroll">
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
@@ -41,173 +41,228 @@
                 </p>
             </div>
         </nav>
-    </div>
-
-    <div class = "container" id = "contenedor-principal">
-        <div id="panel" class="row flex-row flex-nowrap">
-            <div class="col-3 column">
-                <div class="row justify-content-center col-3 contenedor" id = "columna">
-                    <div class="tituloColumnas">
-                        <h4 class="To Do" style="color: white;" contentEditable="true">To Do</h4>
-                        <button onclick = "botonContraerDecontraer(this)" type="button" margin-left=5px class="botonColumnStyle">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="contenidoCompleto" id="contenidoCompleto">
-                        <div class="input-group w-auto">
-                            <input type="text" id="inputCardName" class="form-control" placeholder="Nueva tarjeta..." aria-label="Example input" ria-describedby="nameCard"/>
-                            <button class="btn btn-primary" type="button" onclick="crearTarjeta(this)">+</button>
+        <div class = "container" id = "contenedor-principal">
+            <div id="panel" class="row flex-row flex-nowrap">
+                <div class="col-3 column" id="column-01">
+                    <div class="row justify-content-center col-3 contenedor" id = "columna">
+                        <div class="tituloColumnas">
+                            <h4 class="To Do" style="color: white;" contentEditable="true">To Do</h4>
+                            <div class="dropdown">
+                                <button class="btn btn-primary" prtype="button" id="dropdownTarjeta" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                                        <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                                    </svg>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownTarjeta">
+                                    <li>
+                                        <button id="dropdownEditar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editarColumna">
+                                            Editar
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button id = "dropdownComprimirDescomprimir" class="btn btn-primary" type="button" data-bs-toggle="" data-bs-target="" onclick="contraerDescontraer(this)">
+                                            Comprimir
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button id = "dropdownBorrar" class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#eliminarColumna" onclick = "setIdDeleteColumn('column-01')">
+                                            Borrar
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="contenidoCompleto" id="contenidoCompleto">
+                            <div class="input-group w-auto">
+                                <input type="text" id="inputCardName" class="form-control" placeholder="Add Card" aria-label="Example input" ria-describedby="nameCard"/>
+                                <button class="btn btn-primary" type="button" onclick="crearTarjeta(this)">+</button>
+                            </div>
+                            <div class="contenido" id="contenido" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
                         </div>
                     </div>
-                    <div class = "contenido" id="contenido" ondrop="drop(event)" ondragover="allowDrop(event)">
-
-                    </div>
-                    <div class="botones">
-                        <button  onclick = "borrarColumna(this)" type="button" id="delete" margin-left=5px class="botonColumnStyle btn btn-outline-light rounded-circle">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
-                            </svg>
-                        </button>
-                    </div>
                 </div>
-            </div>
-            <div class="col-3 column">
-                <div class="row justify-content-center col-3 contenedor" id = "columna">
-                    <div class="tituloColumnas">
-                        <h4 class="In Progress" style="color: white;" contentEditable="true">In Progress</h4>
-                        <button onclick = "botonContraerDecontraer(this)" type="button" margin-left=5px class="botonColumnStyle">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="contenidoCompleto" id="contenidoCompleto">
-                        <div class="input-group w-auto">
-                            <input type="text" id="inputCardName" class="form-control" placeholder="Nueva tarjeta..." aria-label="Example input" ria-describedby="nameCard"/>
-                            <button class="btn btn-primary" type="button" onclick="crearTarjeta(this)">+</button>
+                <div class="col-3 column" id="column-02">
+                    <div class="row justify-content-center col-3 contenedor" id="columna">
+                        <div class="tituloColumnas">
+                            <h4 class="To Do" style="color: white;" contentEditable="true">To Do</h4>
+                            <div class="dropdown">
+                                <button class="btn btn-primary" prtype="button" id="dropdownTarjeta" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                                        <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                                    </svg>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownTarjeta">
+                                    <li>
+                                        <button id="dropdownEditar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editarColumna">
+                                            Editar
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button id = "dropdownComprimirDescomprimir" class="btn btn-secondary" onclick="contraerDescontraer(this)">
+                                            Comprimir
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button id = "dropdownBorrar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#eliminarColumna" onclick = "setIdDeleteColumn('column-02')">
+                                            Borrar
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="contenidoCompleto" id="contenidoCompleto">
+                            <div class="input-group w-auto">
+                                <input type="text" id="inputCardName" class="form-control" placeholder="Add Card" aria-label="Example input" ria-describedby="nameCard"/>
+                                <button class="btn btn-primary" type="button" onclick="crearTarjeta(this)">+</button>
+                            </div>
+                            <div class = "contenido" id="contenido" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
                         </div>
                     </div>
-                    <div class = "contenido" id="contenido" ondrop="drop(event)" ondragover="allowDrop(event)">
-                    </div>
-                    <div class="botones">
-                        <button  onclick = "borrarColumna(this)" type="button" id="delete" margin-left=5px class="botonColumnStyle btn btn-outline-light rounded-circle">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
-                            </svg>
-                        </button>
-                    </div>
                 </div>
-            </div>
-            <div class="col-3 column">
-                <div class="row justify-content-center col-3 contenedor" id = "columna">
-                    <div class="tituloColumnas">
-                        <h4 class="Done" style="color: white;" contentEditable="true">Done</h4>
-                        <button onclick = "botonContraerDecontraer(this)" type="button" margin-left=5px class="botonColumnStyle">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="contenidoCompleto" id="contenidoCompleto">
-                        <div class="input-group w-auto">
-                            <input type="text" id="inputCardName" class="form-control" placeholder="Nueva tarjeta..." aria-label="Example input" ria-describedby="nameCard"/>
-                            <button class="btn btn-primary" type="button" onclick="crearTarjeta(this)">+</button>
+                <div class="col-3 column" id="column-03">
+                    <div class="row justify-content-center col-3 contenedor" id = "columna">
+                        <div class="tituloColumnas">
+                            <h4 class="To Do" style="color: white;" contentEditable="true">To Do</h4>
+                            <div class="dropdown">
+                                <button class="btn btn-primary" prtype="button" id="dropdownTarjeta" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                                        <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                                    </svg>
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownTarjeta">
+                                    <li>
+                                        <button id="dropdownEditar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editarColumna">
+                                            Editar
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button id = "dropdownComprimirDescomprimir" class="btn btn-secondary" onclick="contraerDescontraer(this)">
+                                            Comprimir
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button id = "dropdownBorrar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#eliminarColumna" onclick = "setIdDeleteColumn('column-03')">
+                                            Borrar
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="contenidoCompleto" id="contenidoCompleto">
+                            <div class="input-group w-auto">
+                                <input type="text" id="inputCardName" class="form-control" placeholder="Add Card" aria-label="Example input" ria-describedby="nameCard"/>
+                                <button class="btn btn-primary" type="button" onclick="crearTarjeta(this)">+</button>
+                            </div>
+                            <div class = "contenido" id="contenido" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
                         </div>
                     </div>
-                    <div class = "contenido" id="contenido" ondrop="drop(event)" ondragover="allowDrop(event)">
-                    </div>
-                    <div class="botones">
-                        <button  onclick = "borrarColumna(this)" type="button" id="delete" margin-left=5px class="botonColumnStyle btn btn-outline-light rounded-circle">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
-                            </svg>
+                </div>
+                <div class="col-3 column" id="button">
+                    <div class="input-group w-auto">
+                        <input type="text" id="inputColumnName" class="form-control enter-as-button" placeholder="Add Column" aria-label="Example input" ria-describedby="nameCard"/>
+                        <button class="btn btn-primary enter-button" type="button" id="botonCrearColumna1" onclick="crearColumna()" data-mdb-ripple-color="dark">
+                            +
                         </button>
                     </div>
                 </div>
             </div>
-            <div class="col-3 column" id="button">
-                <div class="input-group w-auto">
-                    <input type="text" id="inputColumnName" class="form-control enter-as-button" placeholder="Add Column" aria-label="Example input" ria-describedby="nameCard"/>
-                    <button class="btn btn-primary enter-button" type="button" id="botonCrearColumna1" onclick="crearColumna()" data-mdb-ripple-color="dark">
-                        +
-                    </button>
-                </div>
-            </div>
         </div>
-    </div>
-    <!-- Modal para editar -->
-    <div class="modal" id="editarTarjeta">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Editar tarjeta</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="input-group mb-3">
-                        <span class="input-group-text">Nombre: </span>
-                        <input type="text" class="form-control" id="modalCardTitle" />
+        <!-- Modal para editar tarjeta -->
+        <div class="modal" id="editarTarjeta">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Editar tarjeta</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="input-group mb-3">
-                        <span class="input-group-text">Descripción: </span>
-                        <input type="text" class="form-control" id="modalCardTitle" />
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Nombre: </span>
+                            <input type="text" class="form-control" id="modalCardTitle" />
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Descripción: </span>
+                            <input type="text" class="form-control" id="modalCardTitle" />
+                        </div>
+                        <div class="md-form">
+                            <span class="input-group-text">Vencimiento: </span>
+                            <input type="date" id="inputFecha" name="trip-start" value="Date().getTime()" min="2023-08-01" max="2030-12-31" />
+                        </div>
                     </div>
-                    <div class="md-form">
-                        <span class="input-group-text">Vencimiento: </span>
-                        <input type="date" id="start" name="trip-start" value="2023-07-22" min="2023-08-01" max="2030-12-31" />
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" onclick="guardarTarjetaEditada()">Guardar cambios</button>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary" onclick="guardarTarjetaEditada()">Guardar cambios</button>
+            </div>
+        </div>
+        <!-- Modal para editar columna -->
+        <div class="modal" id="editarTarjeta">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Editar tarjeta</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Nombre: </span>
+                            <input type="text" class="form-control" id="modalCardTitle" />
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Descripción: </span>
+                            <input type="text" class="form-control" id="modalCardTitle" />
+                        </div>
+                        <div class="md-form">
+                            <span class="input-group-text">Vencimiento: </span>
+                            <input type="date" id="start" name="trip-start" value="2023-07-22" min="2023-08-01" max="2030-12-31" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="button" class="btn btn-primary" onclick="guardarTarjetaEditada()">Guardar cambios</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    
-    
-    <!-- Modal para borrar Tarjeta -->
-    <div class="modal" id="eliminarTarjeta">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Borrar tarjeta</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    ¿Estás seguro de que quieres eliminar esta tarjeta?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="borrarTarjeta()">Eliminar</button>
+        <!-- Modal para borrar Tarjeta -->
+        <div class="modal" id="eliminarTarjeta">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Borrar tarjeta</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        ¿Estás seguro de que quieres eliminar esta tarjeta?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="borrarTarjeta()">Eliminar</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div> 
-
-    <!-- Modal para borrar Columna  -->
-    <div class="modal" id="eliminarColumna">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Borrar columna</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    ¿Estás seguro de que quieres eliminar esta columna?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="borrarColumna()">Eliminar</button>
+        </div> 
+        <!-- Modal para borrar Columna  -->
+        <div class="modal" id="eliminarColumna">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Borrar columna</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        ¿Estás seguro de que quieres eliminar esta columna?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="borrarColumna()">Eliminar</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div> 
-
-    <!--- INICIALIZAR JAVASCRIPT -->
-    <script defer src="script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-</body>
+        </div> 
+        <!--- INICIALIZAR JAVASCRIPT -->
+        <script defer src="script.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    </body>
 </html>

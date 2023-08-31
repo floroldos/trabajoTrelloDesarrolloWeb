@@ -1,6 +1,13 @@
-/// Global
+// Comentario general //
+// Gurisas por favor comenten el codigo //
+// Porque los que no hacemos nada y tocamos el codigo cada tanto no sabemos que hacen la funciones // 
+
+/* <=================================== Global Variables ===================================> */
+
 var tarjId = 0;
 var colId = 0;
+
+/* <=================================== Classes ===================================> */
 
 class tarea {
   constructor(nombre, descripcion, listaBullets) {
@@ -11,7 +18,7 @@ class tarea {
 }
 
 class bullet {
-  constructor(nombre, fecha){
+  constructor(nombre, fecha) {
     this.nombre = nombre;
     this.fecha = fecha;
   }
@@ -20,144 +27,156 @@ class bullet {
 /* <=================================== Principal Functions ===================================> */
 
 // Crear Board //
-function craerBoard (nombreBoard){
+function craerBoard(nombreBoard) {
   let board = `
   <li><a class="dropdown-item" href="#">${nombreBoard}</a></li>
   `;
   // Donde esta el href="#" va el link a un nuevo board
   const nuevoBoard = document.createElement("div"); // Crear un nuevo elemento div para el board
   nuevoBoard.innerHTML = board; // Asignar el contenido HTML de la tarjeta al nuevo div
-  
+
   const boards = document.getElementById("boards");
   boards.appendChild(nuevoBoard); // Agregar la nueva columna
 }
 
 // Crear Columna //
-function crearColumna (){
+function crearColumna() {
   let inputName = document.getElementById("panel");
   let nameColumn = document.getElementById("inputColumnName").value;
 
-  if (nameColumn){
-    let = `column-${colId}`;
+  if (nameColumn) {
+    let columnId = `column-${colId}`;
     let column = document.createElement("div");
     column.className = "col-3 column";
     column.id = columnId;
     column.innerHTML = `
     <div class="row justify-content-center col-3 contenedor" id = "columna">
       <div class="tituloColumnas">
-        <input type="text" maxlenght="10" class="${nameColumn}" style="color: white;" contentEditable="true" data-aut>${nameColumn}</h4>
-        <button onclick = "botonContraerDecontraer(this)" type="button" margin-left=5px class="botonColumnStyle">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
-          </svg>
-        </button>
+        <h4 type="text" maxlenght="10" class="${nameColumn}" style="color: white;" contentEditable="true" data-aut>${nameColumn}</h4>
+        <div class="dropdown">
+          <button class="btn btn-primary" prtype="button" id="dropdownTarjeta" data-bs-toggle="dropdown" aria-expanded="false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+              <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+            </svg>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownTarjeta">
+            <li>
+              <button id="dropdownEditar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editarColumna">
+                Editar
+              </button>
+            </li>
+            <li>
+              <button id="dropdownComprimirDescomprimir" class="btn btn-secondary" type="button" onclick="contraerDescontraer(this)">
+                Comprimir
+              </button>
+            </li>
+            <li>
+              <button id="dropdownBorrar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#eliminarColumna" onclick="setIdDeleteColumn('${column.id}')">
+                Borrar
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="contenidoCompleto" id="contenidoCompleto">        
-        <div class="input-group w-auto">
+      <div class="contenidoCompleto" id="contenidoCompleto">
+        <div class="input-group w-auto input">
           <input type="text" id="inputCardName" class="form-control enter-as-button" placeholder="Add Card" aria-label="Example input" ria-describedby="nameCard"/>
           <button class="btn btn-primary enter-button" type="button" onclick="crearTarjeta(this)" data-mdb-ripple-color="dark">
-              +
+            +
           </button>
         </div>
         <div class = "contenido" id="contenido" ondrop="drop(event)" ondragover="allowDrop(event)">
-        </div>
-        <div class="botones">
-          <button  onclick = "setIdDeleteColumn(${columnId})" type="button" id="delete" margin-left=5px class="botonColumnStyle btn btn-outline-light rounded-circle">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-              <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
-            </svg>
-          </button>
         </div>
       </div>
     </div>
   `;
 
-  panel.insertBefore(column, button);
-  colId ++;
+    panel.insertBefore(column, button);
+    colId++;
   }
 }
 
+// Crear Tarjeta //
 function crearTarjeta(button) {
-    let inputName = button.parentNode.querySelector("#inputCardName");
-    let name = inputName.value;
-    if (name) {
-        let columna = button.closest(".contenedor");
-        let contenido = columna.querySelector(".contenido");
-        console.log(contenido);
-        let cardId = `card-${tarjId}`;
-        let card = document.createElement("div");
-        card.className = "card";
-        card.id = cardId;
-        card.innerHTML = `
-            <div class="card-body">
-                <div class="tituloCard">
-                  <h4 class="${cardId}" style="color: black;" contentEditable="true">${name}</h4>
-                  <div class="dropdown">
-                    <button class="btn btn-primary" prtype="button" id="dropdownTarjeta" data-bs-toggle="dropdown" aria-expanded="false">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-                        <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                      </svg>
+  let inputName = button.parentNode.querySelector("#inputCardName");
+  let name = inputName.value;
+  if (name) {
+    let columna = button.closest(".contenedor");
+    let contenido = columna.querySelector(".contenido");
+    console.log(contenido);
+    let cardId = `card-${tarjId}`;
+    let card = document.createElement("div");
+    card.className = "card";
+    card.id = cardId;
+    card.draggable = "true";
+    card.setAttribute('ondrag', 'drag(event)');
+    //card.ondragstart = "drag(event)"
+    card.innerHTML = `
+          <div class="card-body">
+            <div class="tituloCard">
+              <h4 class="${cardId}" style="color: black;" contentEditable="true">${name}</h4>
+              <div class="dropdown">
+                <button class="btn btn-primary" prtype="button" id="dropdownTarjeta" data-bs-toggle="dropdown" aria-expanded="false">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                    <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                  </svg>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownTarjeta">
+                  <li>
+                    <button id = "dropdownEditar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editarTarjeta" onclick="editarTarjeta('${cardId}')">
+                      Editar
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownTarjeta">
-                        <li>
-                          <button id = "dropdownEditar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editarTarjeta" onclick="editarTarjeta('${cardId}')">
-                            Editar
-                          </button>
-                        </li>
-                        <li>
-                          <button id = "dropdownBorrar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#eliminarTarjeta" onclick="setIdToDeleteCard('${cardId}')">
-                            Borrar
-                          </button>
-                        </li>
-                        <li>
-                          <button id = "dropdownDuplicar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#duplicarTarjeta">
-                            Duplicar
-                          </button>
-                        </li>
-                      </ul>
-                  </div>
-                </div>
-                <div class="contenidoCard">
-                </div>
+                  </li>
+                  <li>
+                    <button id = "dropdownBorrar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#eliminarTarjeta" onclick="setIdToDeleteCard('${cardId}')">
+                      Borrar
+                    </button>
+                  </li>
+                  <li>
+                    <button id = "dropdownDuplicar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#duplicarTarjeta">
+                      Duplicar
+                    </button>
+                  </li>
+                </ul>
+              </div>
             </div>
+            <div class="contenidoCard"></div>
+          </div>
         `;
-
-      contenido.appendChild(card);
-      inputName.value = "";
-
-      let nuevaTarea = new tarea(name);
-      let jstring = JSON.stringify(nuevaTarea);
-      localStorage.setItem(cardId, jstring);
-      tarjId++;
-    }
+    contenido.appendChild(card);
+    inputName.value = "";
+    let nuevaTarea = new tarea(name);
+    let jstring = JSON.stringify(nuevaTarea);
+    localStorage.setItem(cardId, jstring);
+    tarjId++;
+  }
 }
 
-// para borrar columna
+// Borrar Columna //
 function borrarColumna() {
   if (columnaParaBorrarId) {
     let column = document.getElementById(columnaParaBorrarId);
     if (column) {
-        column.remove();
-        localStorage.removeItem(columnaParaBorrarId);
-        columnaParaBorrarId = null; // Reset the ID
+      column.remove();
+      localStorage.removeItem(columnaParaBorrarId);
+      columnaParaBorrarId = null; // Reset the ID
     }
-}
-}
-
-// borrar tarjeta
-function borrarTarjeta() {
-  if (tarjetaParaBorrarId) {
-      let card = document.getElementById(tarjetaParaBorrarId);
-      if (card) {
-          card.remove();
-          localStorage.removeItem(tarjetaParaBorrarId);
-          tarjetaParaBorrarId = null; // Reset the ID
-      }
   }
 }
 
-// Para cargar los datos del localstorage //
+// Borrar Tarjeta //
+function borrarTarjeta() {
+  if (tarjetaParaBorrarId) {
+    let card = document.getElementById(tarjetaParaBorrarId);
+    if (card) {
+      card.remove();
+      localStorage.removeItem(tarjetaParaBorrarId);
+      tarjetaParaBorrarId = null; // Reset the ID
+    }
+  }
+}
 
+// Cargar Tarjetas en LocalStorage //
 function cargarJson() {
   let contenedor = document.getElementById("panel");
   for (let i = 0; i < localStorage.length; i++) {
@@ -174,39 +193,38 @@ function cargarJson() {
           card.className = "card";
           card.id = cardId;
           card.innerHTML = `
-          <div class="card-body" draggable = "">
-          <div class="titulo">
+          <div class="card-body">
+            <div class="titulo">
               <h4 class="${cardId}" style="color: black;" contentEditable="true">${taskData.nombre}</h4>
               <div class="dropdown">
-                <button class="btn btn-secondary" type="button" id="dropdownTarjeta" data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="btn btn-primary" type="button" id="dropdownTarjeta" data-bs-toggle="dropdown" aria-expanded="false">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
                     <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
                   </svg>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownTarjeta">
-                    <li>
-                      <button id = "dropdownEditar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editarTarjeta" onclick="editarTarjeta('${cardId}')">
-                        Editar
-                      </button>
-                    </li>
-                    <li>
-                      <button id = "dropdownBorrar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#eliminarTarjeta" onclick="setIdToDeleteCard('${cardId}')">
-                        Borrar
-                      </button>
-                    </li>
-                    <li>
-                      <button id = "dropdownDuplicar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#duplicarTarjeta">
-                        Duplicar
-                      </button>
-                    </li>
-                  </ul>
+                  <li>
+                    <button id = "dropdownEditar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editarTarjeta" onclick="editarTarjeta('${cardId}')">
+                      Editar
+                    </button>
+                  </li>
+                  <li>
+                    <button id = "dropdownBorrar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#eliminarTarjeta" onclick="setIdToDeleteCard('${cardId}')">
+                      Borrar
+                    </button>
+                  </li>
+                  <li>
+                    <button id = "dropdownDuplicar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#duplicarTarjeta">
+                      Duplicar
+                    </button>
+                  </li>
+                </ul>
               </div>
+            </div>
+            <div class="contenidoCard">
+            </div>
           </div>
-          <div class="contenidoCard">
-          </div>
-      </div>
         `;
-
           let contenido = document.getElementById("contenido");
           contenido.appendChild(card);
         } catch (error) {
@@ -220,20 +238,16 @@ function cargarJson() {
 /* <=================================== Other Functions ===================================> */
 
 // Comprimir y Descomprimir //
-function contraerDescontraer(boton){
+function contraerDescontraer(boton) {
   const contenedor = boton.closest('.contenedor');
   const columna = contenedor.querySelector('.contenidoCompleto');
 
   let botonDown = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down-short" viewBox="0 0 16 16">
-      <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
-    </svg>
+    Descomprimir
   `;
 
   let botonUp = `
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-short" viewBox="0 0 16 16">
-      <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/>
-    </svg>
+    Comprimir
   `;
 
   if (columna.style.display === 'none') {
@@ -246,50 +260,7 @@ function contraerDescontraer(boton){
 }
 
 
-function closeModal(modalId) {
-  let modal = document.getElementById(modalId);
-  let bsModal = new bootstrap.Modal(modal);
-  bsModal.hide();
-}
-
-// id de la tarjeta a borrarse
-let tarjetaParaBorrarId;
-function setIdToDeleteCard(cardId) {
-  tarjetaParaBorrarId = cardId;
-}
-
-let columnaParaBorrarId;
-function setIdDeleteColumn(columnId){
-  columnaParaBorrarId = columnId;
-}
-
-let cardToEditId;
-function setIdToEditCard(cardId) {
-  cardToEditId = cardId;
-}
-
-function getIdToEditCard(){
-  return cardToEditId;
-}
-
-/* <=================================== Buttons ===================================> */
-
-// Crear Board //
-function botonCrearBoard(){
-  const nombre = prompt("Ingrese el nombre del tablero")
-  if(nombre !== null && nombre.trim() !== ""){
-    alert(`Columna ${nombre} creada satisfactoriamente.`);
-    craerBoard(nombre);
-  }
-}
-
-// Comprimir y Descomprimir //
-function botonContraerDecontraer(boton){
-  contraerDescontraer(boton);
-}
-
 // DRAG AND DROP //
-
 function allowDrop(ev) {
   ev.preventDefault();
 }
@@ -299,10 +270,64 @@ function drag(ev) {
 }
 
 function drop(ev) {
-  ev.preventDefault();
-  var data = ev.dataTransfer.getData("text", ev.target.id);
-  ev.target.appendChild(document.getElementById(data));
+
+    var data = ev.dataTransfer.getData("text");
+    let container = document.getElementById(ev.target.id);
+    container.appendChild(document.getElementById(data));
 }
+
+// NO SEE QUE HACE ESTA FUNCION FLORES POR FAVOR PONGANLE COMENTARIOS A LAS FUNCIONES //
+// CREO QUE CIERRA EL MODAL //
+function closeModal(modalId) {
+  let modal = document.getElementById(modalId);
+  let bsModal = new bootstrap.Modal(modal);
+  bsModal.hide();
+}
+
+// Id de la columna a borrarse //
+let columnaParaBorrarId;
+function setIdDeleteColumn(columnId) {
+  columnaParaBorrarId = columnId;
+}
+
+// Id de la tarjeta a borrarse //
+let tarjetaParaBorrarId;
+function setIdToDeleteCard(cardId) {
+  tarjetaParaBorrarId = cardId;
+}
+
+// Id de la tarjeta para editarse //
+let cardToEditId;
+function setIdToEditCard(cardId) {
+  cardToEditId = cardId;
+}
+
+// Get de la tarjerra para editarse // 
+function getIdToEditCard() {
+  return cardToEditId;
+}
+
+// // Cabiar de color //
+// function actualizarColor(){
+//   const tiempoActual = new Date().getTime();
+//   let fechalimite = document.getElementById("inputFecha").value;
+//   const tiempoRestante = fechalimite - tiempoActual;
+//   if(tiempoRestante > 0){}
+// }
+
+/* <=================================== Buttons ===================================> */
+// Esta seccion se va a ir la mierda cuando terminemos de cambiar la estructura del board //
+
+// Crear Board //
+function botonCrearBoard() {
+  const nombre = prompt("Ingrese el nombre del tablero")
+  if (nombre !== null && nombre.trim() !== "") {
+    alert(`Columna ${nombre} creada satisfactoriamente.`);
+    craerBoard(nombre);
+  }
+}
+
+// No usen este tipo de estructura por favor usen func tions o clases no dejen las cosas sueltas //
 
 /*
 const container = document.getElementById('contenedor-principal');
@@ -327,5 +352,6 @@ container.addEventListener('click', function(event) {
 existingButton.addEventListener('click', function() {
     alert('Botón Existente clickeado');
 });*/
+
 
 cargarJson();
