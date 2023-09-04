@@ -6,6 +6,7 @@
 
 var tarjId = 0;
 var colId = 0;
+let tarjEdit = 0;  // Variable para saber que tarjeta se va a editar
 
 /* <=================================== Classes ===================================> */
 
@@ -122,7 +123,7 @@ function crearTarjeta(button) {
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownTarjeta">
                   <li>
-                    <button id = "dropdownEditar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editarTarjeta" onclick="editarTarjeta('${cardId}')">
+                    <button id = "dropdownEditar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editarTarjeta" onclick="setTarjEdit(this)">
                       Editar
                     </button>
                   </li>
@@ -203,7 +204,7 @@ function cargarJson() {
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownTarjeta">
                   <li>
-                    <button id = "dropdownEditar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editarTarjeta" onclick="editarTarjeta('${cardId}')">
+                    <button id = "dropdownEditar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editarTarjeta" onclick="setTarjEdit(this)">
                       Editar
                     </button>
                   </li>
@@ -258,7 +259,7 @@ function duplicarTarjeta(button){
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownTarjeta">
           <li>
-            <button id = "dropdownEditar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editarTarjeta" onclick="editarTarjeta('${cardId}')">
+            <button id = "dropdownEditar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editarTarjeta" onclick="setTarjEdit(this)">
               Editar
             </button>
           </li>
@@ -292,7 +293,17 @@ tarjId ++;
 
 }
 
+// Función del modal para editar una tarjeta //
+function editarTarjeta(button){
 
+  let nombreEdit = button.closest(".modal-body");
+  
+}
+
+// Función que settea la tarjeta que se va a editar //
+function setTarjEdit(button){
+  tarjEdit = button.closest(".card");
+}
 
 /* <=================================== Other Functions ===================================> */
 

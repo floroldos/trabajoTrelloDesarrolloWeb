@@ -178,11 +178,11 @@
                     <div class="modal-body">
                         <div class="input-group mb-3">
                             <span class="input-group-text">Nombre: </span>
-                            <input type="text" class="form-control" id="modalCardTitle" />
+                            <input type="text" class="form-control" id="inputName" />
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Descripción: </span>
-                            <input type="text" class="form-control" id="modalCardTitle" />
+                            <input type="text" class="form-control" id="inputDescription" />
                         </div>
                         <div class="md-form">
                             <span class="input-group-text">Vencimiento: </span>
@@ -191,7 +191,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" onclick="guardarTarjetaEditada()">Guardar cambios</button>
+                        <button type="button" class="btn btn-primary" onclick="editarTarjeta(this)">Guardar cambios</button>
                     </div>
                 </div>
             </div>
