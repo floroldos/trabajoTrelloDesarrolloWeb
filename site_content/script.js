@@ -6,6 +6,7 @@
 
 var tarjId = 0;
 var colId = 0;
+let tarjEdit = 0;  // Variable para saber que tarjeta se va a editar
 
 /* <=================================== Classes ===================================> */
 
@@ -103,7 +104,6 @@ function crearTarjeta(button) {
   if (name) {
     let columna = button.closest(".contenedor");
     let contenido = columna.querySelector(".contenido");
-    console.log(contenido);
     let cardId = `card-${tarjId}`;
     let card = document.createElement("div");
     card.className = "card";
@@ -113,7 +113,7 @@ function crearTarjeta(button) {
     //card.ondragstart = "drag(event)"
     card.innerHTML = `
           <div class="card-body">
-            <div class="tituloCard">
+            <div class="titulo">
               <h4 class="${cardId}" style="color: black;" contentEditable="true">${name}</h4>
               <div class="dropdown">
                 <button class="btn btn-primary" prtype="button" id="dropdownTarjeta" data-bs-toggle="dropdown" aria-expanded="false">
@@ -123,7 +123,7 @@ function crearTarjeta(button) {
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownTarjeta">
                   <li>
-                    <button id = "dropdownEditar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editarTarjeta" onclick="editarTarjeta('${cardId}')">
+                    <button id = "dropdownEditar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editarTarjeta" onclick="setTarjEdit(this)">
                       Editar
                     </button>
                   </li>
@@ -133,7 +133,7 @@ function crearTarjeta(button) {
                     </button>
                   </li>
                   <li>
-                    <button id = "dropdownDuplicar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#duplicarTarjeta">
+                    <button id = "dropdownDuplicar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#duplicarTarjeta" onclick="duplicarTarjeta(this)">
                       Duplicar
                     </button>
                   </li>
@@ -204,7 +204,7 @@ function cargarJson() {
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownTarjeta">
                   <li>
-                    <button id = "dropdownEditar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editarTarjeta" onclick="editarTarjeta('${cardId}')">
+                    <button id = "dropdownEditar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editarTarjeta" onclick="setTarjEdit(this)">
                       Editar
                     </button>
                   </li>
@@ -214,7 +214,7 @@ function cargarJson() {
                     </button>
                   </li>
                   <li>
-                    <button id = "dropdownDuplicar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#duplicarTarjeta">
+                    <button id = "dropdownDuplicar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#duplicarTarjeta" onclick="duplicarTarjeta(this)">
                       Duplicar
                     </button>
                   </li>
@@ -233,6 +233,76 @@ function cargarJson() {
       }
     }
   }
+}
+
+/* <=================================== Modal Functions ===================================> */
+
+// Función del modal para duplicar una tarjeta //
+function duplicarTarjeta(button){
+  let tarjetaADuplicar = button.closest(".titulo"); // Obtener el título de la tarjeta más cercana al botón duplicar
+
+  let tituloADuplicar = tarjetaADuplicar.querySelector("h4").innerHTML; // Obtener el título de la tarjeta a duplicar
+  let cardId = `card-${tarjId}`;
+
+  let duplicada = document.createElement("div");
+  duplicada.className = "card";
+  duplicada.id = cardId;
+  duplicada.innerHTML = `
+  <div class="card-body">
+    <div class="titulo">
+      <h4 class="${cardId}" style="color: black;" contentEditable="true">${tituloADuplicar}</h4>
+      <div class="dropdown">
+        <button class="btn btn-primary" type="button" id="dropdownTarjeta" data-bs-toggle="dropdown" aria-expanded="false">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+            <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+          </svg>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownTarjeta">
+          <li>
+            <button id = "dropdownEditar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editarTarjeta" onclick="setTarjEdit(this)">
+              Editar
+            </button>
+          </li>
+          <li>
+            <button id = "dropdownBorrar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#eliminarTarjeta" onclick="setIdToDeleteCard('${cardId}')">
+              Borrar
+            </button>
+          </li>
+          <li>
+            <button id = "dropdownDuplicar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#duplicarTarjeta" onclick="duplicarTarjeta(this)">
+              Duplicar
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="contenidoCard">
+    </div>
+  </div>
+`;
+
+
+let contenido = tarjetaADuplicar.closest(".contenido");
+contenido.appendChild(duplicada);
+
+let nuevaTarea = new tarea(tituloADuplicar);
+let jstring = JSON.stringify(nuevaTarea);
+localStorage.setItem(cardId, jstring);
+
+tarjId ++;
+
+}
+
+// Función del modal para editar una tarjeta //
+function editarTarjeta(button){
+
+  let nombreEdit = button.closest(".modal-body");
+  
+}
+
+// Función que settea la tarjeta que se va a editar //
+function setTarjEdit(button){
+  tarjEdit = button.closest(".card");
 }
 
 /* <=================================== Other Functions ===================================> */
