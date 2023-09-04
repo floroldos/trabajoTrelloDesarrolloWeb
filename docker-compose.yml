@@ -1,0 +1,13 @@
+version: "3"
+services:
+    web:
+        image: webserver
+        ports:
+          - "8080:80"
+ 
+        volumes:
+          - ./site_content/:/usr/share/nginx/html
+        expose:
+          - "8080"
+        tty: true        
+        stdin_open: true
