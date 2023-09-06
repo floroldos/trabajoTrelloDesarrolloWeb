@@ -330,6 +330,12 @@ function setTarjEdit(button){
 
 /* <=================================== Other Functions ===================================> */
 
+function traerDatos(){
+  fetch("http://localhost:8091/package.json")
+  .then(response => response.json)
+  .then(data => console.log(data))
+}
+
 // Comprimir y Descomprimir //
 function contraerDescontraer(boton) {
   const contenedor = boton.closest('.contenedor');
@@ -448,3 +454,4 @@ existingButton.addEventListener('click', function() {
 
 
 cargarJson();
+traerDatos();
