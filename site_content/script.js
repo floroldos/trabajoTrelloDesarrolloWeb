@@ -8,6 +8,7 @@ var tarjId = 0;
 var colId = 0;
 let tarjEdit = 0;  // Variable para saber que tarjeta se va a editar
 
+
 /* <=================================== Classes ===================================> */
 
 class tarea {
@@ -92,6 +93,11 @@ function crearColumna() {
     </div>
   `;
 
+
+    let colList = [];
+
+    localStorage.setItem(colId,colList);  
+
     panel.insertBefore(column, button);
     colId++;
   }
@@ -114,7 +120,7 @@ function crearTarjeta(button) {
     card.innerHTML = `
           <div class="card-body">
             <div class="titulo">
-              <h4 class="${cardId}" style="color: black;" contentEditable="true">${name}</h4>
+            <textarea class="${cardId}" aria-label="${cardId}" spellcheck="false" dir="auto" maxlength="80" data-autosize="true">${name}</textarea>
               <div class="dropdown">
                 <button class="btn btn-primary" prtype="button" id="dropdownTarjeta" data-bs-toggle="dropdown" aria-expanded="false">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
@@ -146,10 +152,20 @@ function crearTarjeta(button) {
     contenido.appendChild(card);
     inputName.value = "";
     let nuevaTarea = new tarea(name);
+
+    console.log(columna);
+
+    /*
+    for(let i = 0; i < localStorage.length; i++){
+      if(localStorage.getItem(i) ==)
+    }
+    */
+
     let jstring = JSON.stringify(nuevaTarea);
     localStorage.setItem(cardId, jstring);
     tarjId++;
   }
+
 }
 
 // Borrar Columna //
@@ -195,7 +211,7 @@ function cargarJson() {
           card.innerHTML = `
           <div class="card-body">
             <div class="titulo">
-              <h4 class="${cardId}" style="color: black;" contentEditable="true">${taskData.nombre}</h4>
+            <textarea id="tituloCard" class="${cardId}" aria-label="${cardId}" spellcheck="false" dir="auto" maxlength="80" data-autosize="true">${taskData.nombre}</textarea>
               <div class="dropdown">
                 <button class="btn btn-primary" type="button" id="dropdownTarjeta" data-bs-toggle="dropdown" aria-expanded="false">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
