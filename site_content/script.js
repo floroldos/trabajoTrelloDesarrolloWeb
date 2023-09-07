@@ -114,7 +114,7 @@ function crearTarjeta(button) {
     card.innerHTML = `
           <div class="card-body">
             <div class="titulo">
-              <h4 class="${cardId}" style="color: black;" contentEditable="true">${name}</h4>
+              <textarea class="${cardId}" aria-label="${cardId}" spellcheck="false" maxlength="80" data-autosize="true">${name}</textarea>
               <div class="dropdown">
                 <button class="btn btn-primary" prtype="button" id="dropdownTarjeta" data-bs-toggle="dropdown" aria-expanded="false">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
@@ -195,7 +195,7 @@ function cargarJson() {
           card.innerHTML = `
           <div class="card-body">
             <div class="titulo">
-              <h4 class="${cardId}" style="color: black;" contentEditable="true">${taskData.nombre}</h4>
+              <textarea class="${cardId}" aria-label="${cardId}" spellcheck="false" dir="auto" maxlength="80" data-autosize="true">${taskData.nombre}</textarea>
               <div class="dropdown">
                 <button class="btn btn-primary" type="button" id="dropdownTarjeta" data-bs-toggle="dropdown" aria-expanded="false">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
@@ -331,23 +331,19 @@ function contraerDescontraer(boton) {
 
 
 // DRAG AND DROP //
-function allowDrop(ev) {
-  ev.preventDefault();
+function dragstart_handler(ev) {
+  // Add the target element's id to the data transfer object
+  ev.dataTransfer.setData("text/plain", ev.target.id);
 }
 
-function drag(ev) {
-  ev.dataTransfer.setData("text", ev.target.id);
-}
+window.addEventListener("DOMContentLoaded", () => {
+  // Get the element by id
+  const element = document.getElementById("p1");
+  // Add the ondragstart event listener
+  element.addEventListener("dragstart", dragstart_handler);
+});
 
-function drop(ev) {
-
-    var data = ev.dataTransfer.getData("text");
-    let container = document.getElementById(ev.target.id);
-    container.appendChild(document.getElementById(data));
-}
-
-// NO SEE QUE HACE ESTA FUNCION FLORES POR FAVOR PONGANLE COMENTARIOS A LAS FUNCIONES //
-// CREO QUE CIERRA EL MODAL //
+//Esconde el modal//
 function closeModal(modalId) {
   let modal = document.getElementById(modalId);
   let bsModal = new bootstrap.Modal(modal);
