@@ -1,0 +1,10 @@
+version: "3"
+services:
+    web:
+        image: node-web-app
+        ports:
+          - "8091:8091" 
+        expose:
+          - "8091"
+        tty: true        
+        stdin_open: true

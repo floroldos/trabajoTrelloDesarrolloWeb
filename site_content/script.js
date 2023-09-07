@@ -8,6 +8,7 @@ var tarjId = 0;
 var colId = 0;
 let tarjEdit = 0;  // Variable para saber que tarjeta se va a editar
 
+
 /* <=================================== Classes ===================================> */
 
 class tarea {
@@ -46,12 +47,12 @@ function crearColumna() {
   let nameColumn = document.getElementById("inputColumnName").value;
 
   if (nameColumn) {
-    let columnId = `column-${colId}`;
+    let columnId = `${colId}`;
     let column = document.createElement("div");
     column.className = "col-3 column";
     column.id = columnId;
     column.innerHTML = `
-    <div class="row justify-content-center col-3 contenedor" id = "columna">
+    <div class="row justify-content-center col-3 contenedor" id="${colId}">
       <div class="tituloColumnas">
         <h4 type="text" maxlenght="10" class="${nameColumn}" style="color: white;" contentEditable="true" data-aut>${nameColumn}</h4>
         <div class="dropdown">
@@ -92,6 +93,11 @@ function crearColumna() {
     </div>
   `;
 
+
+    let colList = [];
+
+    localStorage.setItem(colId,colList);  
+
     panel.insertBefore(column, button);
     colId++;
   }
@@ -114,7 +120,7 @@ function crearTarjeta(button) {
     card.innerHTML = `
           <div class="card-body">
             <div class="titulo">
-              <textarea class="${cardId}" aria-label="${cardId}" spellcheck="false" maxlength="80" data-autosize="true">${name}</textarea>
+            <textarea class="${cardId}" aria-label="${cardId}" spellcheck="false" dir="auto" maxlength="80" data-autosize="true">${name}</textarea>
               <div class="dropdown">
                 <button class="btn btn-primary" prtype="button" id="dropdownTarjeta" data-bs-toggle="dropdown" aria-expanded="false">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
@@ -146,9 +152,23 @@ function crearTarjeta(button) {
     contenido.appendChild(card);
     inputName.value = "";
     let nuevaTarea = new tarea(name);
+
+    console.log(columna);
     let jstring = JSON.stringify(nuevaTarea);
-    localStorage.setItem(cardId, jstring);
+
+    for(let i = 0; i < localStorage.length; i++){
+      if(localStorage.key(i) === columna.id){
+        let arrId = localStorage.key(i);
+        let arrCard = localStorage.getItem(i);
+        
+        if(arrCard === null){
+          arrCard = [];
+        }
+        
+        localStorage.setItem(arrId, arrCard);
+      }
     tarjId++;
+    }
   }
 }
 
@@ -180,58 +200,61 @@ function borrarTarjeta() {
 function cargarJson() {
   let contenedor = document.getElementById("panel");
   for (let i = 0; i < localStorage.length; i++) {
-    let cardId = localStorage.key(i);
-    let tarjetaExistente = document.getElementById(cardId);
+    for(let j = 0; i < i.length; j++){
+      let cardId = localStorage[i].key(j);
+      let tarjetaExistente = document.getElementById(cardId);
 
-    if (!tarjetaExistente) {
-      let taskDataStr = localStorage.getItem(cardId);
-      if (taskDataStr) {
-        try {
-          let taskData = JSON.parse(taskDataStr);
+      if (!tarjetaExistente) {
+        let taskDataStr = localStorage[i].getItem(cardId);
+        if (taskDataStr) {
+          try {
+            let taskData = JSON.parse(taskDataStr);
 
-          let card = document.createElement("div");
-          card.className = "card";
-          card.id = cardId;
-          card.innerHTML = `
-          <div class="card-body">
-            <div class="titulo">
-              <textarea class="${cardId}" aria-label="${cardId}" spellcheck="false" dir="auto" maxlength="80" data-autosize="true">${taskData.nombre}</textarea>
-              <div class="dropdown">
-                <button class="btn btn-primary" type="button" id="dropdownTarjeta" data-bs-toggle="dropdown" aria-expanded="false">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-                    <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
-                  </svg>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownTarjeta">
-                  <li>
-                    <button id = "dropdownEditar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editarTarjeta" onclick="setTarjEdit(this)">
-                      Editar
-                    </button>
-                  </li>
-                  <li>
-                    <button id = "dropdownBorrar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#eliminarTarjeta" onclick="setIdToDeleteCard('${cardId}')">
-                      Borrar
-                    </button>
-                  </li>
-                  <li>
-                    <button id = "dropdownDuplicar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#duplicarTarjeta" onclick="duplicarTarjeta(this)">
-                      Duplicar
-                    </button>
-                  </li>
-                </ul>
+            let card = document.createElement("div");
+            card.className = "card";
+            card.id = cardId;
+            card.innerHTML = `
+            <div class="card-body">
+              <div class="titulo">
+              <textarea id="tituloCard" class="${cardId}" aria-label="${cardId}" spellcheck="false" dir="auto" maxlength="80" data-autosize="true">${taskData.nombre}</textarea>
+                <div class="dropdown">
+                  <button class="btn btn-primary" type="button" id="dropdownTarjeta" data-bs-toggle="dropdown" aria-expanded="false">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                      <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                    </svg>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownTarjeta">
+                    <li>
+                      <button id = "dropdownEditar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#editarTarjeta" onclick="setTarjEdit(this)">
+                        Editar
+                      </button>
+                    </li>
+                    <li>
+                      <button id = "dropdownBorrar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#eliminarTarjeta" onclick="setIdToDeleteCard('${cardId}')">
+                        Borrar
+                      </button>
+                    </li>
+                    <li>
+                      <button id = "dropdownDuplicar" class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#duplicarTarjeta" onclick="duplicarTarjeta(this)">
+                        Duplicar
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="contenidoCard">
               </div>
             </div>
-            <div class="contenidoCard">
-            </div>
-          </div>
-        `;
-          let contenido = document.getElementById("contenido");
-          contenido.appendChild(card);
-        } catch (error) {
-          console.error('Error parsing JSON:', error);
+          `;
+            let contenido = document.getElementById("contenido");
+            contenido.appendChild(card);
+          } catch (error) {
+            console.error('Error parsing JSON:', error);
+          }
         }
       }
     }
+    
   }
 }
 
@@ -306,6 +329,12 @@ function setTarjEdit(button){
 }
 
 /* <=================================== Other Functions ===================================> */
+
+function traerDatos(){
+  fetch("http://localhost:8091/package.json")
+  .then(response => response.json)
+  .then(data => console.log(data))
+}
 
 // Comprimir y Descomprimir //
 function contraerDescontraer(boton) {
@@ -421,3 +450,4 @@ existingButton.addEventListener('click', function() {
 
 
 cargarJson();
+traerDatos();
