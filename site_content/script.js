@@ -9,13 +9,15 @@ var colId = 0;
 let tarjEdit = 0;  // Variable para saber que tarjeta se va a editar
 
 
+
 /* <=================================== Classes ===================================> */
 
 class tarea {
-  constructor(nombre, descripcion, listaBullets) {
+  constructor(nombre, descripcion, listaBullets, dueDate) {
     this.nombre = nombre;
     this.descripcion = descripcion;
-    this.listaBullets;
+    this.listaBullets = listaBullets;
+    this.dueDate = dueDate;
   }
 }
 
@@ -54,7 +56,7 @@ function crearColumna() {
     column.innerHTML = `
     <div class="row justify-content-center col-3 contenedor" id="${colId}">
       <div class="tituloColumnas">
-        <h4 type="text" maxlenght="10" class="${nameColumn}" style="color: white;" contentEditable="true" data-aut>${nameColumn}</h4>
+      <textarea id="nombreColumna" class="list-header-name mod-list-name js-list-name-input" aria-label="${nameColumn}" spellcheck="false" dir="auto" maxlength="80" data-autosize="true">${nameColumn}</textarea>
         <div class="dropdown">
           <button class="btn btn-primary" prtype="button" id="dropdownTarjeta" data-bs-toggle="dropdown" aria-expanded="false">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
@@ -120,7 +122,7 @@ function crearTarjeta(button) {
     card.innerHTML = `
           <div class="card-body">
             <div class="titulo">
-            <textarea class="${cardId}" aria-label="${cardId}" spellcheck="false" dir="auto" maxlength="80" data-autosize="true">${name}</textarea>
+            <textarea class="${cardId}" aria-label="${cardId}" spellcheck="false" dir="auto" maxlength="20" data-autosize="true">${name}</textarea>
               <div class="dropdown">
                 <button class="btn btn-primary" prtype="button" id="dropdownTarjeta" data-bs-toggle="dropdown" aria-expanded="false">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
@@ -146,13 +148,13 @@ function crearTarjeta(button) {
                 </ul>
               </div>
             </div>
-            <div class="contenidoCard"></div>
+            <div class="contenidoCard">
+            </div>
           </div>
         `;
     contenido.appendChild(card);
     inputName.value = "";
-    let nuevaTarea = new tarea(name);
-
+    let nuevaTarea = new tarea(name, descripcion, listaBullets, dueDate);
     console.log(columna);
     let jstring = JSON.stringify(nuevaTarea);
 
@@ -165,7 +167,7 @@ function crearTarjeta(button) {
           arrCard = [];
         }
         
-        localStorage.setItem(arrId, arrCard);
+        localStorage.setItem(arrId, jstring);
       }
     tarjId++;
     }
@@ -318,10 +320,35 @@ tarjId ++;
 
 // Función del modal para editar una tarjeta //
 function editarTarjeta(button){
-
-  let nombreEdit = button.closest(".modal-body");
-  
+  button.closest(".modal-body");
 }
+
+//guardar editar tarjeta//
+
+function guardarTarjetaEditada() {
+  // Get the edited values from the modal
+  const editedTitle = document.getElementById("editCardTitle").value;
+  const editedDescription = document.getElementById("editCardDescription").value;
+  const editedDueDate = document.getElementById("editCardDueDate").value;
+
+  // Find the card element you want to update (assuming its ID is "card-01")
+  const cardToUpdate = document.getElementById("card-01");
+
+  // Update the card's title and description
+  const cardTitle = cardToUpdate.querySelector(".card-title");
+  const cardDescription = cardToUpdate.querySelector(".card-description");
+  cardTitle.textContent = editedTitle;
+  cardDescription.textContent = editedDescription;
+
+  // Update the card's due date (assuming you have a specific element for the date)
+  const cardDueDate = cardToUpdate.querySelector(".card-due-date");
+  cardDueDate.textContent = "Due Date: " + editedDueDate;
+
+  // Close the modal
+  closeEditModal();
+}
+
+
 
 // Función que settea la tarjeta que se va a editar //
 function setTarjEdit(button){
@@ -448,6 +475,4 @@ existingButton.addEventListener('click', function() {
     alert('Botón Existente clickeado');
 });*/
 
-
-cargarJson();
 traerDatos();

@@ -46,7 +46,7 @@
                 <div class="col-3 column" id="column-01">
                     <div class="row justify-content-center col-3 contenedor" id = "columna">
                         <div class="tituloColumnas">
-                            <textarea class="To Do" style="color: white;">To Do</textarea>
+                            <textarea id="nombreColumna" class="list-header-name mod-list-name js-list-name-input" aria-label="${nombreColumna}" spellcheck="false" dir="auto" maxlength="80" data-autosize="true">To do</textarea>
                             <div class="dropdown">
                                 <button class="btn btn-primary" prtype="button" id="dropdownTarjeta" data-bs-toggle="dropdown" aria-expanded="false">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
@@ -84,7 +84,7 @@
                 <div class="col-3 column" id="column-02">
                     <div class="row justify-content-center col-3 contenedor" id="columna">
                         <div class="tituloColumnas">
-                            <h4 class="In Progress" style="color: white;" contentEditable="true">In Progress</h4>
+                            <textarea id="nombreColumna" class="list-header-name mod-list-name js-list-name-input" spellcheck="false" dir="auto" maxlength="80" data-autosize="true">In progress</textarea>
                             <div class="dropdown">
                                 <button class="btn btn-primary" prtype="button" id="dropdownTarjeta" data-bs-toggle="dropdown" aria-expanded="false">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
@@ -122,7 +122,7 @@
                 <div class="col-3 column" id="column-03">
                     <div class="row justify-content-center col-3 contenedor" id = "columna">
                         <div class="tituloColumnas">
-                            <h4 class="Done" style="color: white;" contentEditable="true">Done</h4>
+                            <textarea id="nombreColumna" class="list-header-name mod-list-name js-list-name-input" spellcheck="false" dir="auto" maxlength="80" data-autosize="true">Done</textarea>
                             <div class="dropdown">
                                 <button class="btn btn-primary" prtype="button" id="dropdownTarjeta" data-bs-toggle="dropdown" aria-expanded="false">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
@@ -172,59 +172,31 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Editar tarjeta</h5>
+                        <h5 class="modal-title">Editar Tarjeta</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">Nombre: </span>
-                            <input type="text" class="form-control" id="inputName" />
+                        <div class="mb-3">
+                            <label for="editCardTitle" class="form-label">Título:</label>
+                            <input type="text" class="form-control" id="editCardTitle">
                         </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">Descripción: </span>
-                            <input type="text" class="form-control" id="inputDescription" />
+                        <div class="mb-3">
+                            <span for="editCardDescription">Descripción:</span>
+                            <textarea class="form-control" id="editCardDescription" rows="3"></textarea>
                         </div>
-                        <div class="md-form">
-                            <span class="input-group-text">Vencimiento: </span>
-                            <input type="date" id="inputFecha" name="trip-start" value="Date().getTime()" min="2023-08-01" max="2030-12-31" />
+                        <div class="mb-3">
+                            <label for="editCardDueDate" class="form-label">Fecha de vencimiento:</label>
+                            <input type="date" class="form-control" id="editCardDueDate">
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" onclick="editarTarjeta(this)">Guardar cambios</button>
+                        <button type="button" class="btn btn-primary" onclick="guardarTarjetaEditada()">Guardar Cambios</button>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Modal para editar columna -->
-        <div class="modal" id="editarTarjeta">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Editar tarjeta</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">Nombre: </span>
-                            <input type="text" class="form-control" id="modalCardTitle" />
-                        </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">Descripción: </span>
-                            <input type="text" class="form-control" id="modalCardTitle" />
-                        </div>
-                        <div class="md-form">
-                            <span class="input-group-text">Vencimiento: </span>
-                            <input type="date" id="start" name="trip-start" value="2023-07-22" min="2023-08-01" max="2030-12-31" />
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="button" class="btn btn-primary" onclick="guardarTarjetaEditada()">Guardar cambios</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <!-- Modal para borrar Tarjeta -->
         <div class="modal" id="eliminarTarjeta">
             <div class="modal-dialog">
