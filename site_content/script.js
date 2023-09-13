@@ -8,8 +8,7 @@ var tarjId = 0;
 var colId = 0;
 let tarjEdit = 0;  // Variable para saber que tarjeta se va a editar
 
-
-
+console.log("running script")
 /* <=================================== Classes ===================================> */
 
 class tarea {
@@ -154,6 +153,7 @@ function crearTarjeta(button) {
         `;
     contenido.appendChild(card);
     inputName.value = "";
+    descripcion = "";
     let nuevaTarea = new tarea(name, descripcion, listaBullets, dueDate);
     console.log(columna);
     let jstring = JSON.stringify(nuevaTarea);
@@ -167,6 +167,7 @@ function crearTarjeta(button) {
           arrCard = [];
         }
         
+        // agregar nuevaTarea a arrCard
         localStorage.setItem(arrId, jstring);
       }
     tarjId++;
@@ -199,6 +200,7 @@ function borrarTarjeta() {
 }
 
 // Cargar Tarjetas en LocalStorage //
+/*
 function cargarJson() {
   let contenedor = document.getElementById("panel");
   for (let i = 0; i < localStorage.length; i++) {
@@ -259,6 +261,7 @@ function cargarJson() {
     
   }
 }
+*/
 
 /* <=================================== Modal Functions ===================================> */
 
@@ -266,7 +269,7 @@ function cargarJson() {
 function duplicarTarjeta(button){
   let tarjetaADuplicar = button.closest(".titulo"); // Obtener el título de la tarjeta más cercana al botón duplicar
 
-  let tituloADuplicar = tarjetaADuplicar.querySelector("h4").innerHTML; // Obtener el título de la tarjeta a duplicar
+  let tituloADuplicar = tarjetaADuplicar.querySelector("textarea").innerHTML; // Obtener el título de la tarjeta a duplicar
   let cardId = `card-${tarjId}`;
 
   let duplicada = document.createElement("div");
@@ -275,7 +278,7 @@ function duplicarTarjeta(button){
   duplicada.innerHTML = `
   <div class="card-body">
     <div class="titulo">
-      <h4 class="${cardId}" style="color: black;" contentEditable="true">${tituloADuplicar}</h4>
+    <textarea class="${cardId}" aria-label="${cardId}" spellcheck="false" dir="auto" maxlength="0" maxwidth="10" data-autosize="true">${tituloADuplicar}</textarea>
       <div class="dropdown">
         <button class="btn btn-primary" type="button" id="dropdownTarjeta" data-bs-toggle="dropdown" aria-expanded="false">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
@@ -312,8 +315,22 @@ contenido.appendChild(duplicada);
 
 let nuevaTarea = new tarea(tituloADuplicar);
 let jstring = JSON.stringify(nuevaTarea);
-localStorage.setItem(cardId, jstring);
 
+let columna = button.closest(".contenedor");
+for(let i = 0; i < localStorage.length; i++){
+  if(localStorage.key(i) === columna.id){
+    let arrId = localStorage.key(i);
+    let arrCard = localStorage.getItem(i);
+    
+    if(arrCard === null){
+      arrCard = [];
+    }
+    
+    // agregar nuevaTarea a arrCard
+    localStorage.setItem(arrId, jstring);
+  }
+
+}
 tarjId ++;
 
 }
@@ -323,45 +340,12 @@ function editarTarjeta(button){
   button.closest(".modal-body");
 }
 
-//guardar editar tarjeta//
-
-function guardarTarjetaEditada() {
-  // Get the edited values from the modal
-  const editedTitle = document.getElementById("editCardTitle").value;
-  const editedDescription = document.getElementById("editCardDescription").value;
-  const editedDueDate = document.getElementById("editCardDueDate").value;
-
-  // Find the card element you want to update (assuming its ID is "card-01")
-  const cardToUpdate = document.getElementById("card-01");
-
-  // Update the card's title and description
-  const cardTitle = cardToUpdate.querySelector(".card-title");
-  const cardDescription = cardToUpdate.querySelector(".card-description");
-  cardTitle.textContent = editedTitle;
-  cardDescription.textContent = editedDescription;
-
-  // Update the card's due date (assuming you have a specific element for the date)
-  const cardDueDate = cardToUpdate.querySelector(".card-due-date");
-  cardDueDate.textContent = "Due Date: " + editedDueDate;
-
-  // Close the modal
-  closeEditModal();
-}
-
-
-
 // Función que settea la tarjeta que se va a editar //
 function setTarjEdit(button){
   tarjEdit = button.closest(".card");
 }
 
 /* <=================================== Other Functions ===================================> */
-
-function traerDatos(){
-  fetch("http://localhost:8091/package.json")
-  .then(response => response.json)
-  .then(data => console.log(data))
-}
 
 // Comprimir y Descomprimir //
 function contraerDescontraer(boton) {
@@ -387,17 +371,17 @@ function contraerDescontraer(boton) {
 
 
 // DRAG AND DROP //
-function dragstart_handler(ev) {
-  // Add the target element's id to the data transfer object
-  ev.dataTransfer.setData("text/plain", ev.target.id);
-}
+// function dragstart_handler(ev) {
+//   // Add the target element's id to the data transfer object
+//   ev.dataTransfer.setData("text/plain", ev.target.id);
+// }
 
-window.addEventListener("DOMContentLoaded", () => {
-  // Get the element by id
-  const element = document.getElementById("p1");
-  // Add the ondragstart event listener
-  element.addEventListener("dragstart", dragstart_handler);
-});
+// window.addEventListener("DOMContentLoaded", () => {
+//   // Get the element by id
+//   const element = document.getElementById("p1");
+//   // Add the ondragstart event listener
+//   element.addEventListener("dragstart", dragstart_handler);
+// });
 
 //Esconde el modal//
 function closeModal(modalId) {
@@ -474,5 +458,3 @@ container.addEventListener('click', function(event) {
 existingButton.addEventListener('click', function() {
     alert('Botón Existente clickeado');
 });*/
-
-traerDatos();

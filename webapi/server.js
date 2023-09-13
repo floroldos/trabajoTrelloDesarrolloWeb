@@ -13,11 +13,24 @@ const HOST = '0.0.0.0';
 // App
 const app = express();
 var corsOptions = {
-    origin: 'http://localhost:8080',
+    origin: 'http://127.0.0.1:61613',
     optionsSuccessStatus: 200, 
     methods: "GET, PUT"
 }
-app.use(express.json())
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*'); // Replace '*' with specific origins as needed
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  
+  if (req.method === 'OPTIONS') {
+    // Handle preflight requests
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+});
+app.use(express.json());
 app.use(cors(corsOptions));
 let cards = [];
 
@@ -38,7 +51,7 @@ app.post('/card', (req, res) => {
   }
   cards.push(card) 
   res.send(card);
-});
+});``
 
 app.put('/card/:id', (req, res) => {    
   let card = {
