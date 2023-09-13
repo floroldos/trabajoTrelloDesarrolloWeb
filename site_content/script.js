@@ -2,21 +2,21 @@
 // Gurisas por favor comenten el codigo //
 // Porque los que no hacemos nada y tocamos el codigo cada tanto no sabemos que hacen la funciones // 
 
+// const { json } = require("body-parser");
+
 /* <=================================== Global Variables ===================================> */
 
 var tarjId = 0;
 var colId = 0;
 let tarjEdit = 0;  // Variable para saber que tarjeta se va a editar
 
-console.log("running script")
+console.log("running script");
 /* <=================================== Classes ===================================> */
 
 class tarea {
-  constructor(nombre, descripcion, listaBullets, dueDate) {
+  constructor(nombre, descripcion) {
     this.nombre = nombre;
     this.descripcion = descripcion;
-    this.listaBullets = listaBullets;
-    this.dueDate = dueDate;
   }
 }
 
@@ -154,24 +154,23 @@ function crearTarjeta(button) {
     contenido.appendChild(card);
     inputName.value = "";
     descripcion = "";
-    let nuevaTarea = new tarea(name, descripcion, listaBullets, dueDate);
-    console.log(columna);
+    let nuevaTarea = new tarea(name, descripcion);
     let jstring = JSON.stringify(nuevaTarea);
 
-    for(let i = 0; i < localStorage.length; i++){
-      if(localStorage.key(i) === columna.id){
-        let arrId = localStorage.key(i);
-        let arrCard = localStorage.getItem(i);
+    // for(let i = 0; i < localStorage.length; i++){
+    //   if(localStorage.key(i) === columna.id){
+    //     let arrId = localStorage.key(i);
+    //     let arrCard = localStorage.getItem(i);
         
-        if(arrCard === null){
-          arrCard = [];
-        }
-        
-        // agregar nuevaTarea a arrCard
-        localStorage.setItem(arrId, jstring);
-      }
+    //     if(arrCard === null){
+    //       arrCard = [];
+    //     }
+    //     // agregar nuevaTarea a arrCard
+    //     localStorage.setItem(arrId, jstring);
+    //   }
+    // }
     tarjId++;
-    }
+    postCard(jstring);
   }
 }
 
@@ -258,7 +257,6 @@ function cargarJson() {
         }
       }
     }
-    
   }
 }
 */
@@ -332,7 +330,7 @@ for(let i = 0; i < localStorage.length; i++){
 
 }
 tarjId ++;
-
+postCard(jstring);
 }
 
 // Función del modal para editar una tarjeta //
@@ -346,6 +344,21 @@ function setTarjEdit(button){
 }
 
 /* <=================================== Other Functions ===================================> */
+
+function postCard(objCard){
+  fetch("http://localhost:8091/card", {
+  method: "POST",
+  body: objCard,
+  headers: {
+    "Content-type": "application/json; charset=UTF-8"
+    },
+  Access_Control_Allow_Origin: '*'
+  })
+      .then((response) => {
+        return response.json();
+      })
+      .then((json) => console.log(json));
+}
 
 // Comprimir y Descomprimir //
 function contraerDescontraer(boton) {
@@ -426,7 +439,7 @@ function getIdToEditCard() {
 
 // Crear Board //
 function botonCrearBoard() {
-  const nombre = prompt("Ingrese el nombre del tablero")
+  const nombre = prompt("Ingrese el nombre del tablero");
   if (nombre !== null && nombre.trim() !== "") {
     alert(`Columna ${nombre} creada satisfactoriamente.`);
     craerBoard(nombre);

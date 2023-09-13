@@ -13,7 +13,7 @@ const HOST = '0.0.0.0';
 // App
 const app = express();
 var corsOptions = {
-    origin: 'http://127.0.0.1:61613',
+    origin: 'http://127.0.0.1:5500',
     optionsSuccessStatus: 200, 
     methods: "GET, PUT"
 }
@@ -47,7 +47,8 @@ app.get('/card', (req, res) => {
 app.post('/card', (req, res) => {   
   let card = {
     id: uuidv4().toString(),
-    text: req.body.text
+    descripcion: req.body.descripcion,
+    nombre: req.body.nombre
   }
   cards.push(card) 
   res.send(card);
@@ -56,7 +57,8 @@ app.post('/card', (req, res) => {
 app.put('/card/:id', (req, res) => {    
   let card = {
     id: req.params['id'],
-    text: req.body.text
+    descripcion: req.body.descripcion,
+    nombre: req.body.nombre
   }
   _.remove(cards, (elem)=>{
     return elem.id == req.params['id']    
