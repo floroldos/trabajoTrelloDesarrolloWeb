@@ -9,9 +9,14 @@
         <link rel = "stylesheet" href = "style.css">
         <link rel="shortcut icon" href="img/trello-seeklogo.com.svg">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+            <!--- INICIALIZAR JAVASCRIPT -->
+        <script defer src="./data.js"></script>
+        <script defer src="./script.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
     </head>
 
-    <body onload="localStorage.clear()">
+    <body>
         <nav class="navbar scroll">
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
@@ -43,7 +48,7 @@
         </nav>
         <div class = "container" id = "contenedor-principal">
             <div id="panel" class="row flex-row flex-nowrap">
-                <div class="col-3 column" id="column-01">
+                <div class="col-lg 3 col-md-3 col-sm-12 col-xs-12" id="column-01">
                     <div class="row justify-content-center col-3 contenedor" id = "columna">
                         <div class="tituloColumnas">
                             <textarea id="nombreColumna" class="list-header-name mod-list-name js-list-name-input" aria-label="${nombreColumna}" spellcheck="false" dir="auto" maxlength="80" data-autosize="true">To do</textarea>
@@ -81,7 +86,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-3 column" id="column-02">
+                <div class="col-lg 3 col-md-3 col-sm-12 col-xs-12" id="column-02">
                     <div class="row justify-content-center col-3 contenedor" id="columna">
                         <div class="tituloColumnas">
                             <textarea id="nombreColumna" class="list-header-name mod-list-name js-list-name-input" spellcheck="false" dir="auto" maxlength="80" data-autosize="true">In progress</textarea>
@@ -233,8 +238,5 @@
                 </div>
             </div>
         </div> 
-        <!--- INICIALIZAR JAVASCRIPT -->
-        <script defer src="script.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-    </body>
+        </body>
 </html>
