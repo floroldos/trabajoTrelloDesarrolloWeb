@@ -49,3 +49,25 @@ function postBoard(objBoard) {
     })
     .then((json) => console.log(json));
 }
+
+function getBoards() {
+    fetch("http://localhost:8091/boards")
+    .then((response) => {
+        return response.json();
+    })
+    .then((json) => {
+        console.log(json);
+        for(let i = 0; i < json.length; i++) {
+            const boards = document.getElementById("boards");
+            let boardId = `board-${tablerodId}`;
+            let board = document.createElement("div");
+            board.className = "board";
+            board.id = boardId;
+            board.innerHTML = `
+            <li><a class="dropdown-item" href="#">${json[i].nombre}</a></li>
+            `;
+            boards.appendChild(board);
+            tablerodId++;
+        }
+    });
+}

@@ -179,3 +179,30 @@ function postCard(objCard){
     })
     .then((json) => console.log(json));
 }
+
+//es lo mismo que el board hay que cambiarlo
+function getCards() {
+    fetch("http://localhost:8091/card")
+    .then((response) => {
+        return response.json();
+    })
+    .then((json) => {
+        console.log(json);
+        for(let i = 0; i < json.length; i++) {
+            const boards = document.getElementById("boards");
+            let boardId = `board-${tablerodId}`;
+            let board = document.createElement("div");
+            board.className = "board";
+            board.id = boardId;
+            board.innerHTML = `
+            <li><a class="dropdown-item" href="#">${nameBoard}</a></li>
+            `;
+            setNombreBoard("");
+            boards.appendChild(board);
+            tablerodId++;
+            let nuevoBoard = new Board(nameBoard, boardId);
+            let jstringBoard = JSON.stringify(nuevoBoard);
+            postBoard(jstringBoard);
+        }
+    });
+}
