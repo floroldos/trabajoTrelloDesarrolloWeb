@@ -33,6 +33,8 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(cors(corsOptions));
 let cards = [];
+let columns = [];
+let boards = [];
 
 app.get('/', (req, res) => {
   const json = '{"result":true, "count":42}';
@@ -44,21 +46,51 @@ app.get('/card', (req, res) => {
     res.send(cards);
   });
 
+app.get('/column', (req, res) => {
+  res.send(columns);
+});
+
+app.get('/board', (req, res) => {
+  res.send(columns);
+});
+
 app.post('/card', (req, res) => {   
   let card = {
     id: uuidv4().toString(),
+    nombre: req.body.nombre,
     descripcion: req.body.descripcion,
-    nombre: req.body.nombre
+    cardId: req.body.cardId
   }
   cards.push(card) 
   res.send(card);
-});``
+});
+
+app.post('/column', (req, res) => {
+  let column = {
+    id: uuidv4().toString(),
+    nombre: req.body.nombre,
+    columnId: req.body.columnId
+  }
+  columns.push(column)
+  res.send(column);
+});
+
+app.post('/board', (req, res) => {
+  let board = {
+    id: uuidv4().toString(),
+    nombre: req.body.nombre,
+    boardId: req.body.boardId
+  }
+  boards.push(board)
+  res.send(board);
+});
 
 app.put('/card/:id', (req, res) => {    
   let card = {
     id: req.params['id'],
+    nombre: req.body.nombre,
     descripcion: req.body.descripcion,
-    nombre: req.body.nombre
+    cardId: req.body.cardId
   }
   _.remove(cards, (elem)=>{
     return elem.id == req.params['id']    
