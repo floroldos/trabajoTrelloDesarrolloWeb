@@ -1,6 +1,8 @@
+/*---------------------- Global Variables ----------------------*/
 var colId = 0;
 var columnIdByDelete;
 
+/*---------------------- Class Column ----------------------*/
 class Column {
     constructor (nombre, columnId){
         this.nombre = nombre;
@@ -8,6 +10,7 @@ class Column {
     }
 }
 
+/*---------------------- Create Column ----------------------*/
 function crearColumna() {
     let nameColumn = getNombreColumna();
     if(nameColumn) {
@@ -64,14 +67,17 @@ function crearColumna() {
     }
 }
 
+/*---------------------- obtiene el nombre de la column ----------------------*/
 function getNombreColumna() {
     return document.getElementById("inputColumnName").value;
 }
 
+/*---------------------- setea el valor del input del nombre de la column ----------------------*/
 function setNombreColumna(valor) {
     document.getElementById("inputColumnName").value = valor;
 }
 
+/*---------------------- borra la column ----------------------*/
 function borrarColumna() {
     if(columnIdByDelete) {
         let column = document.getElementById(columnIdByDelete);
@@ -83,10 +89,12 @@ function borrarColumna() {
     }
 };
 
+/*---------------------- setea tarjetaParaBorrar con el id de la column para borrar ----------------------*/
 function setIdDeleteColumn(columnId){
     columnIdByDelete = columnId;
-}
+};
 
+/*---------------------- comprime y descomprime la column ----------------------*/
 function contraerDescontraer(boton) {
     const contenedor = boton.closest('.contenedor');
     const columna = contenedor.querySelector('.contenidoCompleto');
@@ -103,10 +111,11 @@ function contraerDescontraer(boton) {
         columna.style.display = 'none';
         boton.innerHTML = botonDown;
     }
-}
+};
 
+/*---------------------- guarda los valores de las columns en la web-api  ----------------------*/
 function postColumn(objColumn) {
-    fetch("http://localhost:8091/columns", {
+    fetch("http://localhost:8091/column", {
         method: "POST",
         body: objColumn,
         headers: {
@@ -120,8 +129,9 @@ function postColumn(objColumn) {
     .then((json) => console.log(json));
 }
 
+/*---------------------- trae los valores de las columns desde la web-api ----------------------*/
 function getColumns() {
-    fetch("http://localhost:8091/columns")
+    fetch("http://localhost:8091/column")
     .then((response) => {
         return response.json();
     })
@@ -132,7 +142,7 @@ function getColumns() {
             let column = document.createElement("div");
             column.className = "col-3 column";
             column.id = columnId;
-            column.innerHTML = `
+            column.innerHTML =`
             <div class="row justify-content-center col-3 contenedor" id="${colId}">
                 <div class="tituloColumnas">
                     <textarea id="nombreColumna" class="list-header-name mod-list-name js-list-name-input" aria-label="${json[i].nombre}" spellcheck="false" dir="auto" maxlength="80" data-autosize="true">${json[i].nombre}</textarea>
@@ -175,5 +185,33 @@ function getColumns() {
             panel.insertBefore(column, button)
             colId++;
         }
+    })
+    .catch((error) => {
+        console.log(error)
     });
 }
+
+/*---------------------- idea para borrar los valores de las columns desde la web-api ----------------------*/
+function deleteColumn(columnId) {
+    fetch(`http://localhost:8091/column/${columnId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-type": "application/json; charset=UTF-8"
+        },
+        Access_Control_Allow_Origin: '*'
+        })
+    .then((resonse) => {
+        return resonse.json();
+    })
+    .then((json) => {
+        console.log(json);
+        for(let i = 0; i < json.length; i++) {
+            if(json[i].columnId === columnId) {
+                json.pop(i, 1);
+            }
+        }
+    });
+};
+
+
+getColumns();
