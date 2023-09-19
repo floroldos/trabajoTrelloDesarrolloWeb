@@ -1,5 +1,7 @@
+/*---------------------- Global Variables ----------------------*/
 var tablerodId = 0;
 
+/*---------------------- Class Board ----------------------*/
 class Board {
     constructor(nombre, boardId){
         this.nombre = nombre;
@@ -7,6 +9,7 @@ class Board {
     }
 }
 
+/*---------------------- Create Board ----------------------*/
 function crearBoard() {
     let nameBoard = getNombreBoard();
     if(nameBoard) {
@@ -27,16 +30,19 @@ function crearBoard() {
     }
 }
 
+/*---------------------- obtener el nombre del board ----------------------*/
 function getNombreBoard() {
     return document.getElementById("inputBoardName").value;
 }
 
+/*---------------------- setea el valor del input del nombre del board ----------------------*/
 function setNombreBoard(valor) {
     document.getElementById("inputBoardName").value = valor;
 }
 
+/*---------------------- guarda los valores de los baord en la web-api  ----------------------*/
 function postBoard(objBoard) {
-    fetch("http://localhost:8091/boards", {
+    fetch("http://localhost:8091/board", {
         method: "POST",
         body: objBoard,
         headers: {
@@ -50,8 +56,9 @@ function postBoard(objBoard) {
     .then((json) => console.log(json));
 }
 
+/*---------------------- trae los valores de los boards desde la web-api ----------------------*/
 function getBoards() {
-    fetch("http://localhost:8091/boards")
+    fetch("http://localhost:8091/board")
     .then((response) => {
         return response.json();
     })
@@ -59,7 +66,7 @@ function getBoards() {
         console.log(json);
         for(let i = 0; i < json.length; i++) {
             const boards = document.getElementById("boards");
-            let boardId = `board-${tablerodId}`;
+            let boardId = json[i].boardId;
             let board = document.createElement("div");
             board.className = "board";
             board.id = boardId;
@@ -69,5 +76,11 @@ function getBoards() {
             boards.appendChild(board);
             tablerodId++;
         }
+    })
+    .catch((error) => {
+        console.log(error)
     });
 }
+
+/*---------------------- Main ----------------------*/
+getBoards();

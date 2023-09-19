@@ -13,7 +13,7 @@ const HOST = '0.0.0.0';
 // App
 const app = express();
 var corsOptions = {
-    origin: 'http://127.0.0.1:5500',
+    origin: 'http://localhost:8080', //Esta dir es de docker compose - si estan el vscode cambiar a la dir de vscode.
     optionsSuccessStatus: 200, 
     methods: "GET, PUT"
 }
@@ -51,7 +51,7 @@ app.get('/column', (req, res) => {
 });
 
 app.get('/board', (req, res) => {
-  res.send(columns);
+  res.send(boards);
 });
 
 app.post('/card', (req, res) => {   
@@ -59,7 +59,8 @@ app.post('/card', (req, res) => {
     id: uuidv4().toString(),
     nombre: req.body.nombre,
     descripcion: req.body.descripcion,
-    cardId: req.body.cardId
+    cardId: req.body.cardId,
+    columnId: req.body.columnId
   }
   cards.push(card) 
   res.send(card);
